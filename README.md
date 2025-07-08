@@ -40,7 +40,7 @@ This project is a RESTful API built with Node.js, Express, and TypeScript, using
 3. **Configure environment variables**
    Create a `.env` file in the project root following the .env.template file 
 
-   ## Running the Project
+## Running the Project
 
 1. **Start the server in development mode**
    ```bash
