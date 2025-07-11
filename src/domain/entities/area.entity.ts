@@ -1,4 +1,3 @@
-
 export interface AreaOptions{
     readonly area_id: Int16Array;
     readonly areaname: string;
@@ -7,10 +6,8 @@ export interface AreaOptions{
     readonly phone: string;
     readonly description: string;
     readonly active: boolean;
-    //readonly lastSeen: Date | undefined;
-
 }
-//////////////////////connect with entity type and item type
+//////////////////////connect with entity type
 export class AreaEntity {
     area_id: Int16Array;
     areaname: string;
@@ -31,8 +28,8 @@ export class AreaEntity {
     }
 
     //? Mapper 
-    static fromObject(mongoObject: {[key: string]: any}): AreaEntity {
-        const {area_id, areaname, pattern_area_id, branch_id, phone, description, active} = mongoObject;
+    static fromObject(postgresObject: {[key: string]: any}): AreaEntity {
+        const {area_id, areaname, pattern_area_id, branch_id, phone, description, active} = postgresObject;
 
         if(!area_id || !areaname || !pattern_area_id || !branch_id || !phone || !description || !active){
             throw new Error("More prop are required");
