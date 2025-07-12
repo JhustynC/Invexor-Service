@@ -6,17 +6,17 @@ export class CreateItemDto{
         readonly itemname: string,
         readonly description: string,
         readonly provider: string,
-        readonly item_entity_ids: Int16Array[],
+        readonly item_type_ids: Int16Array[],
     ){}
 
     static create(props: Partial<ItemOptions>): [string?, CreateItemDto?]{
-        const {item_id, itemname, description, provider, item_entity_ids} = props
+        const {item_id, itemname, description, provider, item_type_ids} = props
 
         if(!item_id) return ["", undefined];
         if(!itemname) return ["", undefined]
         if(!description) return ["", undefined]
         if(!provider) return ["", undefined]
-        if(!item_entity_ids) return ["", undefined]
+        if(!item_type_ids) return ["", undefined]
 
         return [
             undefined,
@@ -25,7 +25,7 @@ export class CreateItemDto{
                 itemname,
                 description,
                 provider,
-                item_entity_ids
+                item_type_ids
             )
         ]
     }

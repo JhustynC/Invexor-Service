@@ -3,7 +3,7 @@ export interface ItemOptions{
     readonly itemname: string;
     readonly description: string;
     readonly provider: string;
-    readonly item_entity_ids: Int16Array[];
+    readonly item_type_ids: Int16Array[];
 }
 //////////////////////connect with entity type and item type
 export class ItemEntity {
@@ -11,21 +11,21 @@ export class ItemEntity {
     itemname: string;
     description: string;
     provider: string;
-    item_entity_ids: Int16Array[] = [];
+    item_type_ids: Int16Array[] = [];
 
-    constructor({item_id, itemname, description, provider, item_entity_ids}: ItemOptions){
+    constructor({item_id, itemname, description, provider, item_type_ids}: ItemOptions){
         this.item_id = item_id;
         this.itemname = itemname;
         this.description = description;
         this.provider = provider;
-        this.item_entity_ids = item_entity_ids;
+        this.item_type_ids = item_type_ids;
     }
 
     //? Mapper 
     static fromObject(postgresObject: {[key: string]: any}): ItemEntity {
-        const {item_id, itemname, description, provider, item_entity_ids} = postgresObject;
+        const {item_id, itemname, description, provider, item_type_ids} = postgresObject;
 
-        if(!item_id || !itemname || !description || !provider || !item_entity_ids){
+        if(!item_id || !itemname || !description || !provider || !item_type_ids){
             throw new Error("More prop are required");
         }
 
@@ -34,7 +34,7 @@ export class ItemEntity {
             itemname,
             description,
             provider,
-            item_entity_ids
+            item_type_ids
         });
     }
 }

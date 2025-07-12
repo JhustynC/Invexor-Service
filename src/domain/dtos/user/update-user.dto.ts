@@ -1,5 +1,3 @@
-
-
 export class UpdateUserDto{
     private constructor(
         readonly user_id: string,
