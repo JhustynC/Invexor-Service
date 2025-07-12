@@ -7,6 +7,6 @@ export abstract class AbsResourceRepository {
     abstract saveResource(item: CreateResourseDto): Promise<ResourceEntity>;
     abstract getById(id: string): Promise<ResourceEntity | undefined>;
     abstract getAll(): Promise<ResourceEntity[]>;
-    abstract updateResource(item: UpdateResourseDto): Promise<ResourceEntity | undefined>;
+    abstract updateResource(resource: UpdateResourseDto): Promise<ResourceEntity | undefined>;
     abstract deleteResource(id: string): Promise<ResourceEntity>;
 }
