@@ -2,9 +2,7 @@ import { AbsAreaDatasource } from "../../domain/datasources/area.datasource";
 import { CreateAreaDto } from "../../domain/dtos/area/create-area.dto";
 import { UpdateAreaDto } from "../../domain/dtos/area/update-area.dto";
 import { AreaEntity } from "../../domain/entities/area.entity";
-import { prisma } from "../../config/data/postgres/postgres.config"
-import { UserEntity } from "../../domain/entities/user.entity";
-
+import { prisma } from "../../config/data/postgres/postgres.config";
 
 export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
 
@@ -28,13 +26,11 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
             where: { id }
         });
         if(!area) return undefined
-        return AreaEntity.fromObject(area)
-        //throw new Error("Method not implemented.");
+        return AreaEntity.fromObject(area);
     }
     async getAll(): Promise<AreaEntity[]> {
         const areas = await prisma.area.findMany();
-        return areas.map((area) => UserEntity.fromObject(area))
-        //throw new Error("Method not implemented.");
+        return areas.map((area) => AreaEntity.fromObject(area));
     }
     async updateArea(area: UpdateAreaDto): Promise<AreaEntity | undefined> {
 

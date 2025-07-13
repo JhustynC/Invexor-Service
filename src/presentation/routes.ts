@@ -1,4 +1,9 @@
 import {Router} from "express";
+import { UserRoutes } from "./user/user.routes";
+import { AreaRoutes } from "./area/area.routes";
+import { BranchRoutes } from "./branch/branch.routes";
+import { ItemRoutes } from "./item/item.routes";
+import { ResourceRoutes } from "./resource/resource.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -10,8 +15,20 @@ export class AppRoutes {
             res.json({message: "REQUEST"});
         });
 
-        //? Main route endpoint
-        // router.use('/user', UserRoutes.routes);
+        //? Area route endpoint
+        router.use('/area', AreaRoutes.routes);
+
+        //? Branch route endpoint
+        router.use('/branch', BranchRoutes.routes);
+
+        //? Item route endpoint
+        router.use('/item', ItemRoutes.routes);
+
+        //? Resource route endpoint
+        router.use('/resource', ResourceRoutes.routes);
+
+        //? User route endpoint
+        router.use('/user', UserRoutes.routes);
 
         return router;
     }

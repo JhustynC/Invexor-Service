@@ -6,6 +6,13 @@ import { prisma } from "../../config/data/postgres/postgres.config";
 
 
 export class PostgresUserDatasourceImp implements AbsUserDatasource{
+    async getById(id: string): Promise<UserEntity | undefined> {
+        const user = await prisma.user.findUnique({
+            where: { id: id }
+        });
+        if(!user) return undefined
+        return UserEntity.fromObject(user);
+    }
     async saveUser(user: CreateUserDto): Promise<UserEntity> {
         const newUser = await prisma.user.create({
             data: {
@@ -18,15 +25,6 @@ export class PostgresUserDatasourceImp implements AbsUserDatasource{
         })
 
         return UserEntity.fromObject(newUser)
-        //throw new Error("Method not implemented.");
-    }
-    
-    async getByEmail(email: string): Promise<UserEntity | undefined> {
-        const user = await prisma.user.findUnique({
-            where: { email: email }
-        });
-        if(!user) return undefined
-        return UserEntity.fromObject(user);
         //throw new Error("Method not implemented.");
     }
     async getAll(): Promise<UserEntity[]> {
