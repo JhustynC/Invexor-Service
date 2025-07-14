@@ -8,11 +8,12 @@ export class CreateResourseDto{
         readonly measure: string,
         readonly currency: string,
         readonly description: string,
+        readonly id_entity: Int16Array, // Optional, as it may not be set during creation
     ){}
 
     static create(props: Partial<ResourceOptions>): [string?, CreateResourseDto?]{
 
-        const {resource_id, resourcename, measure, currency, description} = props
+        const {resource_id, resourcename, measure, currency, description, id_entity} = props
 
         //! Validations
         if(!resource_id) return ["", undefined]
@@ -20,6 +21,7 @@ export class CreateResourseDto{
         if(!measure) return ["", undefined]
         if(!currency) return ["", undefined]
         if(!description) return ["", undefined]
+        if(!id_entity) return ["", undefined]
 
         return [
             undefined, 
@@ -28,7 +30,9 @@ export class CreateResourseDto{
                 resourcename, 
                 measure, 
                 currency, 
-                description)]
+                description,
+                id_entity
+            )]
 
     }
 }
