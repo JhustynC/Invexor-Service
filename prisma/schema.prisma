@@ -14,16 +14,16 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model EntityType {
+/*model EntityType {
   id_entity_type   Int      @id @default(autoincrement())
   name_entity_type String   @unique @db.VarChar(100)
   entities         Entity[]
-}
+}*/
 
 model Entity {
   id_entity      Int        @id @default(autoincrement())
   id_entity_type Int
-  entity_type    EntityType @relation(fields: [id_entity_type], references: [id_entity_type])
+  //entity_type    EntityType @relation(fields: [id_entity_type], references: [id_entity_type])
 
   // Relaciones de transacciones
   transactions_as_old_owner Transaction[] @relation("OldOwner")
