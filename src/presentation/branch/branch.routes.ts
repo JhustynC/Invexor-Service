@@ -38,7 +38,7 @@ export class BranchRoutes {
          *       404:
          *         description: User not found
          */
-        router.get('/:branch_id', branchController.getBranch);
+        router.get('/:id_branch', branchController.getBranch);
 
         /**
          * @swagger
@@ -94,7 +94,7 @@ export class BranchRoutes {
          *       404:
          *         description: User not found
          */
-        router.put('/:branch_id', branchController.updateBranch);
+        router.put('/:id_branch', branchController.updateBranch);
 
         /**
          * @swagger
@@ -113,7 +113,7 @@ export class BranchRoutes {
          *       404:
          *         description: User not found
          */
-        router.delete('/:branch_id', branchController.deleteBranch);
+        router.delete('/:id_branch', branchController.deleteBranch);
      
         return router;
     }    

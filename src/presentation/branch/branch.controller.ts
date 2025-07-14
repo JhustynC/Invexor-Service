@@ -9,11 +9,11 @@ export class BranchController {
 
     public getBranch: RequestHandler = (req, res) => {
         //? Get necessary data from query params
-        const {branch_id} = req.params;
+        const {id_branch} = req.params;
 
         //? We use the specific use-case
         new BranchUseCases(this.branchRepository)
-        .getBranchById(branch_id)
+        .getBranchById(id_branch)
         .then((branch) => res.json(branch))
         .catch((error) => res.status(500).json({error: error.message}));
     }
@@ -41,8 +41,8 @@ export class BranchController {
     }
 
     public updateBranch: RequestHandler = (req, res) => {
-        const { branch_id } =  req.params;
-        const obj = {...req.body, branch_id};
+        const { id_branch } =  req.params;
+        const obj = {...req.body, id_branch};
         const [error, branch] = UpdateBranchDto.create(obj);
 
         if(error){
@@ -57,10 +57,10 @@ export class BranchController {
     }
 
     public deleteBranch: RequestHandler = (req, res) => {
-        const {branch_id} = req.params;
+        const {id_branch} = req.params;
 
         new BranchUseCases(this.branchRepository)
-        .deleteBranch(branch_id)
+        .deleteBranch(id_branch)
         .then((branch) => res.json(branch))
         .catch((error) => res.status(404).json({error: error.message}));
     }

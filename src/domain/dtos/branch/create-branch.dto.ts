@@ -2,34 +2,34 @@ import { BranchOptions } from "../../entities/branch.entity";
 
 export class CreateBranchDto{
     private constructor(
-        readonly branch_id: string,
-        readonly entity_id: number,
-        readonly branchname: string,
+        readonly id_branch: string,
+        readonly id_entity: number,
+        readonly name_branch: string,
         readonly city: string,
         readonly phone: string,
-        readonly active: boolean,
+        readonly state: boolean,
     ){}
     
     static create(props: Partial<BranchOptions>): [string?, CreateBranchDto?]{
-        const {branch_id, entity_id, branchname, city, phone, active} = props
+        const {id_branch, id_entity, name_branch, city, phone, state} = props
 
         //! Validations
-        if(!branch_id) return ["", undefined];
-        if(!entity_id) return ["", undefined];
-        if(!branchname) return ["", undefined];
+        if(!id_branch) return ["", undefined];
+        if(!id_entity) return ["", undefined];
+        if(!name_branch) return ["", undefined];
         if(!city) return ["", undefined];
         if(!phone) return ["", undefined];
-        if(!active) return ["", undefined];
+        if(!state) return ["", undefined];
 
         return [
             undefined,
             new CreateBranchDto(
-                branch_id, 
-                entity_id,
-                branchname, 
+                id_branch, 
+                id_entity,
+                name_branch, 
                 city, 
                 phone, 
-                active
+                state
             )
         ]
     }

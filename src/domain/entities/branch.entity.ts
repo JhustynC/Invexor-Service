@@ -1,45 +1,43 @@
-import { EventEmitter } from "stream";
-
 export interface BranchOptions{
-    readonly branch_id: string;
-    readonly entity_id: number;
-    readonly branchname: string;
+    readonly id_branch: string;
+    readonly id_entity: number;
+    readonly name_branch: string;
     readonly city: string;
     readonly phone: string;
-    readonly active: boolean;
+    readonly state: boolean;
 }
 //////////////////////connect with entity type
 export class BranchEntity {
-    branch_id: string;
-    entity_id: number;
-    branchname: string;
+    id_branch: string;
+    id_entity: number;
+    name_branch: string;
     city: string;
     phone: string;
-    active: boolean;
+    state: boolean;
 
-    constructor({branch_id, entity_id, branchname, city, phone, active}: BranchOptions){
-        this.branch_id = branch_id;
-        this.entity_id = entity_id;
-        this.branchname = branchname;
+    constructor({id_branch, id_entity, name_branch, city, phone, state}: BranchOptions){
+        this.id_branch = id_branch;
+        this.id_entity = id_entity;
+        this.name_branch = name_branch;
         this.city = city;
         this.phone = phone;
-        this.active = active;
+        this.state = state;
     }
 
     static fromObject(postgresObject: {[key: string]: any}): BranchEntity {
-        const {branch_id, entity_id, branchname, city, phone, active} = postgresObject;
+        const {id_branch, id_entity, name_branch, city, phone, state} = postgresObject;
 
-        if(!branch_id || !entity_id || !branchname || !city || !phone || !active){
+        if(!id_branch || !id_entity || !name_branch || !city || !phone || !state){
             throw new Error("More prop are required");
         }
 
         return new BranchEntity({
-            branch_id,
-            entity_id,
-            branchname,
+            id_branch,
+            id_entity,
+            name_branch,
             city,
             phone,
-            active
+            state
         });
     }
 }

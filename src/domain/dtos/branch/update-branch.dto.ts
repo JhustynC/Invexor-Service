@@ -1,38 +1,41 @@
 export class UpdateBranchDto{
     private constructor(
-        readonly branch_id: Int16Array,
-        readonly branchname?: string,
+        readonly id_branch: string,
+        readonly id_entity: number,
+        readonly name_branch?: string,
         readonly city?: string,
         readonly phone?: string,
-        readonly active?: boolean,
+        readonly state?: boolean,
     ){}
 
     public get values(){
         const values: {[key: string]:any} = {};
         
-        if(this.active) values.active = this.active;
-        if(this.branchname) values.branchname = this.branchname;
+        if(this.state) values.state = this.state;
+        if(this.name_branch) values.name_branch = this.name_branch;
         if(this.city) values.city = this.city;
         if(this.phone) values.phone = this.phone;
+        if(this.id_entity) values.id_entity = this.id_entity;
 
         return values
     }
 
     static create(props:  {[key:string]:any}): [string?, UpdateBranchDto?] {
-        const {branch_id, branchname, city, phone, active} = props;
+        const {id_branch,  id_entity, name_branch, city, phone, state} = props;
 
-        if(branchname){
+        if(name_branch){
 
         }
 
         return [
             undefined,
             new UpdateBranchDto(
-                branch_id, 
-                branchname, 
+                id_branch,
+                id_entity,
+                name_branch, 
                 city, 
                 phone, 
-                active
+                state
             )
         ]
 
