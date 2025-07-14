@@ -1,0 +1,154 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model EntityType {
+  id_entity_type   Int     @id
+  name_entity_type String  @unique
+
+  entities Entity[]
+}
+
+model Entity {
+  id_entity        Int     @id
+  name_entity      String
+  id_entity_type   Int
+  entity_type      EntityType @relation(fields: [id_entity_type], references: [id_entity_type])
+
+  old_transactions Transaction[] @relation("OldOwner")
+  new_transactions Transaction[] @relation("NewOwner")
+  transaction_entities TransactionEntity[]
+  custom_property_values CustomPropertyEntityValue[]
+  items Item[]
+  resources Resource[]
+  branches Branch[]
+  areas Area[]
+  users User[]
+}
+
+model Transaction {
+  id_transaction   Int      @id
+  date_transaction DateTime @default(now())
+  id_old_owner     Int
+  id_new_owner     Int
+  amount           Int?
+
+  old_owner Entity @relation("OldOwner", fields: [id_old_owner], references: [id_entity])
+  new_owner Entity @relation("NewOwner", fields: [id_new_owner], references: [id_entity])
+
+  transaction_entities TransactionEntity[]
+}
+
+model TransactionEntity {
+  id_transaction Int
+  id_entity      Int
+
+  transaction Transaction @relation(fields: [id_transaction], references: [id_transaction])
+  entity      Entity      @relation(fields: [id_entity], references: [id_entity])
+
+  @@id([id_transaction, id_entity])
+}
+
+model CustomProperty {
+  id_custom_property   Int     @id
+  name_custom_property String
+  type_custom_property String
+
+  values CustomPropertyEntityValue[]
+}
+
+model CustomPropertyEntityValue {
+  id_entity          Int
+  id_custom_property Int
+  value              String
+
+  entity         Entity         @relation(fields: [id_entity], references: [id_entity])
+  customProperty CustomProperty @relation(fields: [id_custom_property], references: [id_custom_property])
+
+  @@id([id_entity, id_custom_property])
+}
+
+model ItemType {
+  id_item_type Int    @id
+  name         String @unique
+
+  items Item[]
+}
+
+model Item {
+  id_item      String  @id
+  id_item_type Int
+  name_item    String
+  description  String?
+  provider     String
+  id_entity    Int
+
+  item_type ItemType @relation(fields: [id_item_type], references: [id_item_type])
+  entity    Entity   @relation(fields: [id_entity], references: [id_entity])
+}
+
+model Resource {
+  id_resource String @id
+  id_entity   Int
+  measure     String?
+  currency    String?
+  description String?
+
+  entity Entity @relation(fields: [id_entity], references: [id_entity])
+}
+
+model Branch {
+  id_branch String @id
+  id_entity Int
+  city      String?
+  phone     String?
+  state     Boolean
+
+  entity Entity @relation(fields: [id_entity], references: [id_entity])
+  areas  Area[]
+}
+
+model Area {
+  id_area         String @id
+  id_entity       Int
+  id_pattern_area String?
+  id_branch       String
+  phone           String?
+  description     String?
+  state           Boolean
+
+  entity       Entity @relation(fields: [id_entity], references: [id_entity])
+  branch       Branch @relation(fields: [id_branch], references: [id_branch])
+  pattern_area Area?  @relation("PatternArea", fields: [id_pattern_area], references: [id_area])
+  sub_areas    Area[] @relation("PatternArea")
+}
+
+model UserRol {
+  id_user_rol   Int    @id
+  name_user_rol String @unique
+
+  users User[]
+}
+
+model User {
+  id_user     String @id
+  id_entity   Int
+  id_user_rol Int
+  password    String
+  email       String? @unique
+
+  user_rol UserRol @relation(fields: [id_user_rol], references: [id_user_rol])
+  entity   Entity  @relation(fields: [id_entity], references: [id_entity])
+}
