@@ -22,7 +22,6 @@ model EntityType {
 
 model Entity {
   id_entity      Int        @id @default(autoincrement())
-  name_entity    String
   id_entity_type Int
   entity_type    EntityType @relation(fields: [id_entity_type], references: [id_entity_type])
 
@@ -91,6 +90,7 @@ model Item {
 
 model Resource {
   id_resource String  @id
+  name_resource    String   @db.VarChar(255)
   measure     String? @db.VarChar(100)
   currency    String? @db.VarChar(4)
   description String?
@@ -103,6 +103,7 @@ model Resource {
 
 model Branch {
   id_branch String  @id
+  name_branch    String   @db.VarChar(255)
   city      String? @db.VarChar(100)
   phone     String? @db.VarChar(20)
   state     Boolean
@@ -116,6 +117,7 @@ model Branch {
 
 model Area {
   id_area         String  @id
+  name_area    String   @db.VarChar(255)
   id_pattern_area String?
   id_branch       String
   phone           String? @db.VarChar(20)
@@ -139,6 +141,7 @@ model UserRol {
 
 model User {
   id_user     String  @id
+  name_user    String   @db.VarChar(255)
   id_user_rol Int
   password    String  @db.VarChar(100)
   email       String? @unique @db.VarChar(255)

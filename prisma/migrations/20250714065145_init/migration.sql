@@ -9,7 +9,6 @@ CREATE TABLE "EntityType" (
 -- CreateTable
 CREATE TABLE "Entity" (
     "id_entity" SERIAL NOT NULL,
-    "name_entity" TEXT NOT NULL,
     "id_entity_type" INTEGER NOT NULL,
 
     CONSTRAINT "Entity_pkey" PRIMARY KEY ("id_entity")
@@ -57,6 +56,7 @@ CREATE TABLE "Item" (
 -- CreateTable
 CREATE TABLE "Resource" (
     "id_resource" TEXT NOT NULL,
+    "name_resource" VARCHAR(255) NOT NULL,
     "measure" VARCHAR(100),
     "currency" VARCHAR(4),
     "description" TEXT,
@@ -68,6 +68,7 @@ CREATE TABLE "Resource" (
 -- CreateTable
 CREATE TABLE "Branch" (
     "id_branch" TEXT NOT NULL,
+    "name_branch" VARCHAR(255) NOT NULL,
     "city" VARCHAR(100),
     "phone" VARCHAR(20),
     "state" BOOLEAN NOT NULL,
@@ -79,6 +80,7 @@ CREATE TABLE "Branch" (
 -- CreateTable
 CREATE TABLE "Area" (
     "id_area" TEXT NOT NULL,
+    "name_area" VARCHAR(255) NOT NULL,
     "id_pattern_area" TEXT,
     "id_branch" TEXT NOT NULL,
     "phone" VARCHAR(20),
@@ -100,6 +102,7 @@ CREATE TABLE "UserRol" (
 -- CreateTable
 CREATE TABLE "User" (
     "id_user" TEXT NOT NULL,
+    "name_user" VARCHAR(255) NOT NULL,
     "id_user_rol" INTEGER NOT NULL,
     "password" VARCHAR(100) NOT NULL,
     "email" VARCHAR(255),
