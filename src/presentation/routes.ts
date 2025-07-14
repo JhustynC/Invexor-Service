@@ -4,6 +4,7 @@ import { AreaRoutes } from "./area/area.routes";
 import { BranchRoutes } from "./branch/branch.routes";
 import { ItemRoutes } from "./item/item.routes";
 import { ResourceRoutes } from "./resource/resource.routes";
+import { EntityRoutes } from "./entity/entity.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -20,6 +21,9 @@ export class AppRoutes {
 
         //? Branch route endpoint
         router.use('/branch', BranchRoutes.routes);
+
+        //? Entity route endpoint
+        router.use('/entity', EntityRoutes.routes);
 
         //? Item route endpoint
         router.use('/item', ItemRoutes.routes);
