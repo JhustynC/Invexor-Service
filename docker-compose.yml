@@ -6,7 +6,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: chat_app_db
+      MONGO_INITDB_DATABASE: invexor_db
     volumes:
       - mongo_data:/data/db
 
@@ -17,11 +17,10 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: chat_app_db
+      POSTGRES_DB: invexor_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
   mongo_data:
   postgres_data:
-
 

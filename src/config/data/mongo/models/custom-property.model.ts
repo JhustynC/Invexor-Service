@@ -1,7 +1,5 @@
 import { MongoOIDCError } from './../../../../../node_modules/mongodb/src/error';
 import mongoose from "mongoose";
-import { createHash } from "../../../../shared/helpers/hashPassword.helper";
-
 
 const customPropertySchema = new mongoose.Schema({
     propertyname: {type: String, required: true, unique: true},

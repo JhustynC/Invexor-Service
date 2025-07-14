@@ -1,5 +1,4 @@
 import { AbsBranchDatasource } from "../../domain/datasources/branch.datasource";
-import { AbsBranch } from 
 import { CreateBranchDto } from "../../domain/dtos/branch/create-branch.dto";
 import { UpdateBranchDto } from "../../domain/dtos/branch/update-branch.dto";
 import { BranchEntity } from "../../domain/entities/branch.entity";
@@ -9,11 +8,13 @@ export class PostgresBranchDatasourceImp implements AbsBranchDatasource{
     async saveBranch(branch: CreateBranchDto): Promise<BranchEntity> {
         const newBranch = await prisma.branch.create({
             data: {
-                branch_id: branch.branch_id,
-                active: branch.active,
+                id_branch: branch.branch_id,
+                state: branch.active,
                 branchname: branch.branchname,
                 city: branch.city,
                 phone: branch.phone,
+                id_entity: branch.entity_id,
+                // If you need to create a new entity, use 'create' instead of 'connect'
             }
         })
 
@@ -30,7 +31,7 @@ export class PostgresBranchDatasourceImp implements AbsBranchDatasource{
         //throw new Error("Method not implemented.");
     }
     async getAll(): Promise<BranchEntity[]> {
-        const branches = await prisma.branch.findMany(),
+        const branches = await prisma.branch.findMany();
         return branches.map((branch) => BranchEntity.fromObject(branch))
         //throw new Error("Method not implemented.");
     }
