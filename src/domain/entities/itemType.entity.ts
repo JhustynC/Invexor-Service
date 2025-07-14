@@ -1,26 +1,26 @@
 export interface ItemTypeOptions{
-    readonly itemType_id: Int16Array;
+    readonly id_item_type?: number;
     readonly name: string;
 }
 //////////////////////connect with entity type
 export class ItemTypeEntity {
-    itemType_id: Int16Array;
+    id_item_type: number;
     name: string;
 
-    constructor({itemType_id, name}: ItemTypeOptions){
-        this.itemType_id = itemType_id;
+    constructor({id_item_type, name}: ItemTypeOptions){
+        this.id_item_type = id_item_type!;
         this.name = name;
     }
 
     static fromObject(postgresObject: {[key: string]: any}): ItemTypeEntity {
-        const {itemType_id, name} = postgresObject;
+        const {id_item_type, name} = postgresObject;
 
-        if(!itemType_id || !name){
+        if(!id_item_type || !name){
             throw new Error("More prop are required");
         }
 
         return new ItemTypeEntity({
-            itemType_id,
+            id_item_type,
             name
         });
     }

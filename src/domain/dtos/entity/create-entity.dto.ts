@@ -1,4 +1,3 @@
-import { AreaOptions } from "../../entities/area.entity";
 import { EntityOptions } from "../../entities/entity.entity";
 
 

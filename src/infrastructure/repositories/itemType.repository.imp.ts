@@ -8,13 +8,13 @@ export class ItemTypeRepositoryImp implements AbsItemTypeRepository{
     saveItemType(item: CreateItemTypeDto): Promise<ItemTypeEntity> {
         return this.datasource.saveItemType(item);
     }
-    getById(id: string): Promise<ItemTypeEntity | undefined> {
+    getById(id: number): Promise<ItemTypeEntity | undefined> {
         return this.datasource.getById(id);
     }
     getAll(): Promise<ItemTypeEntity[]> {
         return this.datasource.getAll();
     }
-    deleteItemType(id: string): Promise<ItemTypeEntity> {
+    deleteItemType(id: number): Promise<ItemTypeEntity> {
         return this.datasource.deleteItemType(id);
     }
     
