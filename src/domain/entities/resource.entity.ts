@@ -1,5 +1,5 @@
 export interface ResourceOptions{
-    readonly resource_id: Int16Array;
+    readonly resource_id: string;
     readonly resourcename: string;
     readonly measure: string;
     readonly currency: string;
@@ -7,7 +7,7 @@ export interface ResourceOptions{
 }
 //////////////////////connect with entity type
 export class ResourceEntity {
-    resource_id: Int16Array;
+    resource_id: string;
     resourcename: string;
     measure: string;
     description: string;

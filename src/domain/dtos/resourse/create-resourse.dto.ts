@@ -3,7 +3,7 @@ import { ResourceOptions } from "../../entities/resource.entity";
 
 export class CreateResourseDto{
     private constructor(
-        readonly resource_id: Int16Array,
+        readonly resource_id: string,
         readonly resourcename: string,
         readonly measure: string,
         readonly currency: string,
