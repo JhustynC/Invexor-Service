@@ -12,8 +12,7 @@ export class PostgresEntityDatasourceImp implements AbsEntityDatasource{
     async saveEntity(entity: CreateEntityDto): Promise<EntityEntity> {
         const newEntity = await prisma.entity.create({
             data: {
-                id_entity: entity.id_entity,
-                id_type_entity: entity.id_type_entity
+                id_entity_type: entity.id_entity_type
             }
         })
         return EntityEntity.fromObject(newEntity)
@@ -21,7 +20,7 @@ export class PostgresEntityDatasourceImp implements AbsEntityDatasource{
 
     async getById(id: string): Promise<EntityEntity | undefined> {
         const entity = await prisma.entity.findUnique({
-            where: { id }
+            where: { id_entity: Number(id) }
         });
         if(!entity) return undefined
         return EntityEntity.fromObject(entity);
@@ -51,7 +50,7 @@ export class PostgresEntityDatasourceImp implements AbsEntityDatasource{
 
     async deleteEntity(id: string): Promise<EntityEntity> {
         const deleteEntity = await prisma.entity.delete({
-            where: { id_entity: id }
+            where: { id_entity: Number(id) }
         })
         if (!deleteEntity) throw new Error("Something happened while attempting to delete data");
         return EntityEntity.fromObject(deleteEntity);

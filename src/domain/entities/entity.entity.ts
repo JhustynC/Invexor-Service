@@ -1,28 +1,28 @@
 export interface EntityOptions{
-    readonly id_entity: Int16Array;
-    readonly id_type_entity: string;
+    readonly id_entity?: number;
+    readonly id_entity_type: number;
 }
 //////////////////////connect with entity type
 export class EntityEntity {
-    id_entity: Int16Array;
-    id_type_entity: string;
+    id_entity: number;
+    id_entity_type: number;
 
-    constructor({id_entity, id_type_entity}: EntityOptions){
-        this.id_entity = id_entity;
-        this.id_type_entity = id_type_entity;
+    constructor({id_entity, id_entity_type}: EntityOptions){
+        this.id_entity = id_entity!;
+        this.id_entity_type = id_entity_type;
     }
 
     //? Mapper 
     static fromObject(postgresObject: {[key: string]: any}): EntityEntity {
-        const {id_entity, id_type_entity} = postgresObject;
+        const {id_entity, id_entity_type} = postgresObject;
 
-        if(!id_entity || !id_type_entity){
-            throw new Error("More prop are required");
+        if(typeof id_entity !== 'number' || typeof id_entity_type !== 'number'){
+            throw new Error("id_entity and id_entity_type are required and must be numbers");
         }
 
         return new EntityEntity({
             id_entity,
-            id_type_entity
+            id_entity_type
         });
     }
 }

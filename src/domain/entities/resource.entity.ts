@@ -26,15 +26,22 @@ export class ResourceEntity {
 
     //? Mapper 
     static fromObject(postgresObject: {[key: string]: any}): ResourceEntity {
-        const {resource_id,resourcename, measure, description, currency, id_entity} = postgresObject;
-
-        if(!resource_id || !resourcename || !measure || !description || !currency || !id_entity){
-            throw new Error("More prop are required");
+        const {
+            id_resource,
+            name_resource,
+            measure,
+            description,
+            currency,
+            id_entity
+        } = postgresObject;
+    
+        if(!id_resource || !name_resource || !id_entity){
+            throw new Error("id_resource, name_resource, and id_entity are required");
         }
-
+    
         return new ResourceEntity({
-            resource_id,
-            resourcename,
+            resource_id: id_resource,
+            resourcename: name_resource,
             measure,
             description,
             currency,

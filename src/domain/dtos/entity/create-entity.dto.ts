@@ -4,22 +4,19 @@ import { EntityOptions } from "../../entities/entity.entity";
 
 export class CreateEntityDto{
     private constructor(
-        readonly id_entity: Int16Array,
-        readonly id_type_entity: string,
+        readonly id_entity_type: number,
     ){}
 
     static create(props: Partial<EntityOptions>): [string?, CreateEntityDto?]{
-        const {id_entity, id_type_entity} = props
+        const {id_entity_type} = props
 
         //! Validations
-        if(!id_entity) return ["", undefined];
-        if(!id_type_entity) return ["", undefined];
+        if(typeof id_entity_type !== 'number') return ["id_entity_type is required and must be a number", undefined];
 
         return [
             undefined,
             new CreateEntityDto(
-                id_entity,
-                id_type_entity
+                id_entity_type
             )
         ]
     }

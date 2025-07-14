@@ -9,11 +9,12 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     async saveResource(resource: CreateResourseDto): Promise<ResourceEntity> {
         const newResource = await prisma.resource.create({
             data: {
-                resource_id: resource.resource_id,
+                id_resource: resource.resource_id,
+                name_resource: resource.resourcename,
+                measure: resource.measure,
                 currency: resource.currency,
                 description: resource.description,
-                measure: resource.measure,
-                resourcename: resource.resourcename
+                id_entity: Number(resource.id_entity)
             }
         })
 
@@ -22,27 +23,27 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     
     async getById(id: string): Promise<ResourceEntity | undefined> {
         const resource = await prisma.resource.findUnique({
-            where: {resource_id: id}
+            where: {id_resource: id}
         });
         if(!resource) return undefined
         return ResourceEntity.fromObject(resource)
     }
     
     async getAll(): Promise<ResourceEntity[]> {
-        const resources = await prisma.item.findMany();
-        return resources.map((resourse) => ResourceEntity.fromObject(resourse))
+        const resources = await prisma.resource.findMany();
+        return resources.map((resource) => ResourceEntity.fromObject(resource))
     }
     
     async updateResource(resource: UpdateResourseDto): Promise<ResourceEntity | undefined> {
         
         const updateData: any = {};
+        if (resource.resourcename) updateData.name_resource = resource.resourcename;
+        if (resource.measure) updateData.measure = resource.measure;
         if (resource.currency) updateData.currency = resource.currency;
         if (resource.description) updateData.description = resource.description;
-        if (resource.measure) updateData.measure = resource.measure
-        if (resource.resourcename) updateData.resourcename = resource.resourcename
 
-        const updateResource = await prisma.resourse.update({
-            where: {resource_id: resource.resource_id},
+        const updateResource = await prisma.resource.update({
+            where: {id_resource: resource.resource_id},
             data: updateData
         })
 
@@ -52,7 +53,7 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     
     async deleteResource(id: string): Promise<ResourceEntity> {
         const deleteResource = await prisma.resource.delete({
-            where: {resource_id: id}
+            where: {id_resource: id}
         })
         if(!deleteResource) throw new Error("Something happened while attempting to delete data");
         return ResourceEntity.fromObject(deleteResource);
