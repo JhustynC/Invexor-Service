@@ -9,11 +9,11 @@ export class ItemTypeUseCases {
         return await this.repository.saveItemType(dto);
     }
 
-    async deleteItemType(id: string): Promise<ItemTypeEntity>{
+    async deleteItemType(id: number): Promise<ItemTypeEntity>{
         return await this.repository.deleteItemType(id);
     }
 
-    async getItemTypeById(id: string): Promise<ItemTypeEntity | undefined>{
+    async getItemTypeById(id: number): Promise<ItemTypeEntity | undefined>{
         return await this.repository.getById(id);
     }
 

@@ -12,7 +12,7 @@ export class ItemTypeController {
         
         //? We use the specific use-case
         new ItemTypeUseCases(this.itemTypeRepository)
-        .getItemTypeById(id_item_type)
+        .getItemTypeById(Number(id_item_type))
         .then((item) => res.json(item))
         .catch((error) => res.status(500).json({error: error.message}));
     }
@@ -59,7 +59,7 @@ export class ItemTypeController {
         const {id_item_type} = req.params;
 
         new ItemTypeUseCases(this.itemTypeRepository)
-        .deleteItemType(id_item_type)
+        .deleteItemType(Number(id_item_type))
         .then((item) => res.json(item))
         .catch((error) => res.status(404).json({error: error.message}));
     }
