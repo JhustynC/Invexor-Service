@@ -38,7 +38,7 @@ export class UserRoutes {
          *       404:
          *         description: User not found
          */
-        router.get('/:user_id', userController.getUser);
+        router.get('/:id_user', userController.getUser);
 
         /**
          * @swagger
@@ -94,7 +94,7 @@ export class UserRoutes {
          *       404:
          *         description: User not found
          */
-        router.put('/:user_id', userController.updateUser);
+        router.put('/:id_user', userController.updateUser);
 
         /**
          * @swagger
@@ -113,7 +113,7 @@ export class UserRoutes {
          *       404:
          *         description: User not found
          */
-        router.delete('/:user_id', userController.deleteUser);
+        router.delete('/:id_user', userController.deleteUser);
 
         /**
          * @swagger

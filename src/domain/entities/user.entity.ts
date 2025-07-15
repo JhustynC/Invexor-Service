@@ -1,21 +1,21 @@
 export interface UserOptions{
-    readonly user_id: string;
-    readonly username: string;
+    readonly id_user: string;
+    readonly name_user: string;
     readonly email: string;
     readonly password: string;
-    readonly user_role_ids: Int16Array[];
+    readonly user_role_ids: number[];
 }
 /////////////////////Connect with entity type and user roles
 export class UserEntity {
-    user_id: string;
-    username: string;
+    id_user: string;
+    name_user: string;
     email: string;
     password: string;
-    user_role_ids: Int16Array[] = [];
+    user_role_ids: number[] = [];
 
-    constructor({user_id, username, email, password, user_role_ids}: UserOptions){
-        this.user_id = user_id;
-        this.username = username;
+    constructor({id_user, name_user, email, password, user_role_ids}: UserOptions){
+        this.id_user = id_user;
+        this.name_user = name_user;
         this.email = email;
         this.password = password;
         this.user_role_ids = user_role_ids;
@@ -23,15 +23,21 @@ export class UserEntity {
 
     //? Mapper 
     static fromObject(postgresObject: {[key: string]: any}): UserEntity {
-        const {user_id, username, email, password, user_role_ids} = postgresObject;
+        const {id_user, name_user, email, password, user_user_roles} = postgresObject;
 
-        if(!user_id || !username || !email || !password || !user_role_ids){
+        console.log(postgresObject)
+
+        if(!id_user || !name_user || !email || !password || !user_user_roles){
             throw new Error("More prop are required");
         }
 
+        const user_role_ids = user_user_roles.map((role: any) => role.id_user_rol);
+
+        
+
         return new UserEntity({
-            user_id,
-            username,
+            id_user,
+            name_user,
             email,
             password,
             user_role_ids

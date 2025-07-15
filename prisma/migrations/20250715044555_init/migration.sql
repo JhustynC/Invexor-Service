@@ -95,12 +95,19 @@ CREATE TABLE "UserRol" (
 CREATE TABLE "User" (
     "id_user" TEXT NOT NULL,
     "name_user" VARCHAR(255) NOT NULL,
-    "id_user_rol" INTEGER NOT NULL,
     "password" VARCHAR(100) NOT NULL,
     "email" VARCHAR(255),
     "id_entity" INTEGER NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id_user")
+);
+
+-- CreateTable
+CREATE TABLE "UserUserRol" (
+    "id_user" TEXT NOT NULL,
+    "id_user_rol" INTEGER NOT NULL,
+
+    CONSTRAINT "UserUserRol_pkey" PRIMARY KEY ("id_user","id_user_rol")
 );
 
 -- CreateTable
@@ -186,10 +193,13 @@ ALTER TABLE "Area" ADD CONSTRAINT "Area_id_pattern_area_fkey" FOREIGN KEY ("id_p
 ALTER TABLE "Area" ADD CONSTRAINT "Area_id_branch_fkey" FOREIGN KEY ("id_branch") REFERENCES "Branch"("id_branch") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_id_user_rol_fkey" FOREIGN KEY ("id_user_rol") REFERENCES "UserRol"("id_user_rol") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_id_entity_fkey" FOREIGN KEY ("id_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_id_entity_fkey" FOREIGN KEY ("id_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserUserRol" ADD CONSTRAINT "UserUserRol_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id_user") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserUserRol" ADD CONSTRAINT "UserUserRol_id_user_rol_fkey" FOREIGN KEY ("id_user_rol") REFERENCES "UserRol"("id_user_rol") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EntityArea" ADD CONSTRAINT "EntityArea_id_entity_fkey" FOREIGN KEY ("id_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;

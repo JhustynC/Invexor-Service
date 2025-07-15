@@ -135,21 +135,31 @@ model Area {
 model UserRol {
   id_user_rol   Int    @id @default(autoincrement())
   name_user_rol String @unique @db.VarChar(100)
-  users         User[]
+
+  user_user_roles UserUserRol[]
 }
 
 model User {
   id_user     String  @id
   name_user    String   @db.VarChar(255)
-  id_user_rol Int
   password    String  @db.VarChar(100)
   email       String? @unique @db.VarChar(255)
   id_entity   Int
 
-  user_rol UserRol @relation(fields: [id_user_rol], references: [id_user_rol])
   entity   Entity  @relation(fields: [id_entity], references: [id_entity])
 
-  entity_users EntityUser[]
+  entity_users     EntityUser[]
+  user_user_roles  UserUserRol[]
+}
+
+model UserUserRol {
+  id_user     String
+  id_user_rol Int
+
+  user    User    @relation(fields: [id_user], references: [id_user])
+  userRol UserRol @relation(fields: [id_user_rol], references: [id_user_rol])
+
+  @@id([id_user, id_user_rol])
 }
 
 // Tablas de relación muchos a muchos

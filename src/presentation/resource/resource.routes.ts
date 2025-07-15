@@ -52,7 +52,7 @@ export class ResourceRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               username:
+         *               name_user:
          *                 type: string
          *               email:
          *                 type: string
@@ -84,7 +84,7 @@ export class ResourceRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               username:
+         *               name_user:
          *                 type: string
          *               password:
          *                 type: string

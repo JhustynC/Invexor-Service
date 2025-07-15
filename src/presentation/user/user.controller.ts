@@ -12,11 +12,11 @@ export class UserController {
 
     public getUser: RequestHandler = (req, res) => {
         //? Get necessary data from query params
-        const {user_id} = req.params;
+        const {id_user} = req.params;
         
         //? We use the specific use-case
         new UserUseCases(this.userRepository)
-        .getUserById(user_id)
+        .getUserById(id_user)
         .then((user) => res.json(user))
         .catch((error) => res.status(500).json({error: error.message}));
     }

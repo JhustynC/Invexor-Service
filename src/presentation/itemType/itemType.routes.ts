@@ -52,7 +52,7 @@ export class ItemTypeRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               username:
+         *               name_user:
          *                 type: string
          *               email:
          *                 type: string

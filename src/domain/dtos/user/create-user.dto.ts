@@ -3,20 +3,20 @@ import { UserOptions } from "../../entities/user.entity";
 
 export class CreateUserDto{
     private constructor(
-        readonly user_id: string,
-        readonly username: string,
+        readonly id_user: string,
+        readonly name_user: string,
         readonly email: string,
         readonly password: string,
-        readonly user_role_ids: Int16Array[],
+        readonly user_role_ids: number[],
     ){}
 
     static create(props: Partial<UserOptions>): [string?, CreateUserDto?]{
 
-        const {user_id, username, email, password, user_role_ids} = props
+        const {id_user, name_user, email, password, user_role_ids} = props
 
         //! Validations
-        if(!user_id) return ["User-id is required", undefined];
-        if(!username) return ["Username is required", undefined];
+        if(!id_user) return ["User-id is required", undefined];
+        if(!name_user) return ["Username is required", undefined];
         if(!password) return ["Password is required", undefined];
         if(!email) return ["Email is required", undefined];
         if(!user_role_ids) return ["User rol or roles are required", undefined];
@@ -24,8 +24,8 @@ export class CreateUserDto{
         return [
             undefined,
             new CreateUserDto(
-                user_id,
-                username,
+                id_user,
+                name_user,
                 email,
                 password,
                 user_role_ids

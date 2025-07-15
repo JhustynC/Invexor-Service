@@ -1,7 +1,7 @@
 export class UpdateUserDto{
     private constructor(
-        readonly user_id: string,
-        readonly username?: string,
+        readonly id_user: string,
+        readonly name_user?: string,
         readonly email?: string,
         readonly password?: string,
         readonly user_role_ids?: Int16Array[],
@@ -10,7 +10,7 @@ export class UpdateUserDto{
     public get values(){
         const values: {[key: string]:any} = {};
 
-        if(this.username) values.username = this.username;
+        if(this.name_user) values.username = this.name_user;
         if(this.password) values.password = this.password;
         if(this.email) values.email = this.email;
         if(this.user_role_ids) values.user_role_ids = this.user_role_ids;
@@ -19,7 +19,7 @@ export class UpdateUserDto{
     }
 
     static create(props: {[key:string]:any}): [string?, UpdateUserDto?] {
-        const {user_id, username, email, password, user_role_ids} = props;
+        const {id_user, username, email, password, user_role_ids} = props;
         
         if(username){
             //? Validations
@@ -28,7 +28,7 @@ export class UpdateUserDto{
         return [
             undefined, 
             new UpdateUserDto(
-                user_id, 
+                id_user, 
                 username, 
                 email, 
                 password, 
