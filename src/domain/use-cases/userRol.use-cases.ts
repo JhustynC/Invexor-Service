@@ -10,11 +10,11 @@ export class UserRolUseCases {
         return await this.repository.saveUserRol(dto);
     }
 
-    async deleteUserRol(id: string): Promise<UserRolEntity>{
+    async deleteUserRol(id: number): Promise<UserRolEntity>{
         return await this.repository.deleteUserRol(id);
     }
 
-    async getUserRolById(id: string): Promise<UserRolEntity | undefined>{
+    async getUserRolById(id: number): Promise<UserRolEntity | undefined>{
         return await this.repository.getUserRolById(id);
     }
 

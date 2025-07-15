@@ -8,13 +8,13 @@ export class UserRolRepositoryImp implements AbsUserRolRepository{
     saveUserRol(userRol: CreateUserRolDto): Promise<UserRolEntity> {
         return this.datasource.saveUserRol(userRol);
     }
-    getUserRolById(id: string): Promise<UserRolEntity | undefined> {
+    getUserRolById(id: number): Promise<UserRolEntity | undefined> {
         return this.datasource.getUserRolById(id);
     }
     getAllUserRols(): Promise<UserRolEntity[]> {
         return this.datasource.getAllUserRols();
     }
-    deleteUserRol(id: string): Promise<UserRolEntity> {
+    deleteUserRol(id: number): Promise<UserRolEntity> {
         return this.datasource.deleteUserRol(id);
     }
 }

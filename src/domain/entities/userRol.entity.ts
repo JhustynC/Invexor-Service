@@ -1,27 +1,27 @@
 export interface UserRolOptions{
-    readonly userRol_id: Int16Array;
-    readonly rolname: string;
+    readonly id_user_rol: number;
+    readonly name_user_rol: string;
 }
 //////////////////////connect with entity type
 export class UserRolEntity {
-    userRol_id: Int16Array;
-    rolname: string;
+    id_user_rol: number;
+   name_user_rol: string;
 
-    constructor({userRol_id, rolname}: UserRolOptions){
-        this.userRol_id = userRol_id;
-        this.rolname = rolname;
+    constructor({id_user_rol,name_user_rol}: UserRolOptions){
+        this.id_user_rol = id_user_rol;
+        this.name_user_rol =name_user_rol;
     }
 
     static fromObject(postgresObject: {[key: string]: any}): UserRolEntity {
-        const {userRol_id, rolname} = postgresObject;
+        const {id_user_rol, name_user_rol} = postgresObject;
 
-        if(!userRol_id || !rolname){
+        if(!id_user_rol || !name_user_rol){
             throw new Error("More prop are required");
         }
 
         return new UserRolEntity({
-            userRol_id,
-            rolname
+            id_user_rol,
+           name_user_rol
         });
     }
 }

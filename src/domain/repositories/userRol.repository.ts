@@ -4,8 +4,8 @@ import { UserRolEntity } from "../entities/userRol.entity";
 //? Rules
 export abstract class AbsUserRolRepository {
     abstract saveUserRol(userRol: CreateUserRolDto): Promise<UserRolEntity>;
-    abstract getUserRolById(id: string): Promise<UserRolEntity | undefined>;
+    abstract getUserRolById(id: number): Promise<UserRolEntity | undefined>;
     abstract getAllUserRols(): Promise<UserRolEntity[]>;
     //abstract updateUserRol(item: UpdateUserRolDto): Promise<UserRolEntity | undefined>;
-    abstract deleteUserRol(id: string): Promise<UserRolEntity>;
+    abstract deleteUserRol(id: number): Promise<UserRolEntity>;
 }

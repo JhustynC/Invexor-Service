@@ -6,6 +6,7 @@ import { ItemRoutes } from "./item/item.routes";
 import { ResourceRoutes } from "./resource/resource.routes";
 import { EntityRoutes } from "./entity/entity.routes";
 import { ItemTypeRoutes } from "./itemType/itemType.routes";
+import { UserRolRoutes } from "./userRol/userRol.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -37,6 +38,9 @@ export class AppRoutes {
 
         //? User route endpoint
         router.use('/user', UserRoutes.routes);
+
+        //? User route endpoint
+        router.use('/userRol', UserRolRoutes.routes);
 
         return router;
     }
