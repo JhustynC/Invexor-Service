@@ -9,11 +9,12 @@ export class PostgresItemDatasourceImp implements AbsItemDatasource{
     async saveItem(item: CreateItemDto): Promise<ItemEntity> {
         const newItem = await prisma.item.create({
             data: {
-                item: item.item_id,
+                id_item: item.id_item,
                 description: item.description,
-                item_type_ids: item.item_type_ids,
-                itemname: item.itemname,
-                provider: item.provider
+                id_item_type: item.id_item_type,
+                name_item: item.name_item,
+                provider: item.provider,
+                id_entity: item.id_entity
             }
         })
 
@@ -22,7 +23,7 @@ export class PostgresItemDatasourceImp implements AbsItemDatasource{
     
     async getById(id: string): Promise<ItemEntity | undefined> {
         const item = await prisma.item.findUnique({
-            where: {item_id: id}
+            where: {id_item: id}
         })
         if(!item) return undefined
         return ItemEntity.fromObject(item)
@@ -36,12 +37,12 @@ export class PostgresItemDatasourceImp implements AbsItemDatasource{
     async updateItem(item: UpdateItemDto): Promise<ItemEntity | undefined> {
         const updateData: any = {};
         if (item.description) updateData.description = item.description;
-        if (item.item_type_ids) updateData.description = item.item_type_ids;
-        if (item.itemname) updateData.itemname = item.itemname;
+        if (item.id_item_type) updateData.id_item_type = item.id_item_type;
+        if (item.name_item) updateData.name_item = item.name_item;
         if (item.provider) updateData.provider = item.provider;
         //if (item.)
         const updateItem = await prisma.item.update({
-            where: {item_id: item.item_id},
+            where: {id_item: item.id_item},
             data: updateData
         })
         
@@ -51,7 +52,7 @@ export class PostgresItemDatasourceImp implements AbsItemDatasource{
     
     async deleteItem(id: string): Promise<ItemEntity> {
         const deleteItem = await prisma.item.delete({
-            where: {item_id: id}
+            where: {id_item: id}
         })
         if (!deleteItem) throw new Error("Something happened while attempting to delete data");
         return ItemEntity.fromObject(deleteItem)
