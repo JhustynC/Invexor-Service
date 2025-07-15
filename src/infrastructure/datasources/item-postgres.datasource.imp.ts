@@ -40,7 +40,8 @@ export class PostgresItemDatasourceImp implements AbsItemDatasource{
         if (item.id_item_type) updateData.id_item_type = item.id_item_type;
         if (item.name_item) updateData.name_item = item.name_item;
         if (item.provider) updateData.provider = item.provider;
-        //if (item.)
+        if (item.id_entity) updateData.id_entity = item.id_entity;
+
         const updateItem = await prisma.item.update({
             where: {id_item: item.id_item},
             data: updateData

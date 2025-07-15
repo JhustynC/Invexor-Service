@@ -1,11 +1,11 @@
 export class UpdateItemDto{
     private constructor(
         readonly id_item: string,
-        readonly name_item: string,
-        readonly description: string,
-        readonly provider: string,
-        readonly id_item_type: number,
-        readonly id_entity: number
+        readonly name_item?: string,
+        readonly description?: string,
+        readonly provider?: string,
+        readonly id_item_type?: number,
+        readonly id_entity?: number
     ){}
 
     public get values(){
