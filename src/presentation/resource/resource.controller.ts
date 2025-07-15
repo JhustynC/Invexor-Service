@@ -9,11 +9,11 @@ export class ResourceController {
 
     public getResource: RequestHandler = (req, res) => {
         //? Get necessary data from query params
-        const {resource_id} = req.params;
+        const {id_resource} = req.params;
         
         //? We use the specific use-case
         new ResourceUseCases(this.resourceRepository)
-        .getResourceById(resource_id)
+        .getResourceById(id_resource)
         .then((resource) => res.json(resource))
         .catch((error) => res.status(500).json({error: error.message}));
     }
@@ -57,10 +57,10 @@ export class ResourceController {
     }
 
     public deleteResource: RequestHandler = (req, res) => {
-        const { id } = req.params;
+        const { id_resource } = req.params;
 
         new ResourceUseCases(this.resourceRepository)
-        .deleteResource(id)
+        .deleteResource(id_resource)
         .then((resource) => res.json(resource))
         .catch((error) => res.status(404).json({error: error.message}));
     }

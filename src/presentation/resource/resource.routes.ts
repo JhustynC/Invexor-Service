@@ -38,7 +38,7 @@ export class ResourceRoutes {
          *       404:
          *         description: User not found
          */
-        router.get('/:email', resourceController.getResource);
+        router.get('/:id_resource', resourceController.getResource);
 
         /**
          * @swagger
@@ -94,7 +94,7 @@ export class ResourceRoutes {
          *       404:
          *         description: User not found
          */
-        router.put('/:email', resourceController.updateResource);
+        router.put('/:id_resource', resourceController.updateResource);
 
         /**
          * @swagger
@@ -113,7 +113,7 @@ export class ResourceRoutes {
          *       404:
          *         description: User not found
          */
-        router.delete('/:email', resourceController.deleteResource);
+        router.delete('/:id_resource', resourceController.deleteResource);
      
         return router;
     }    

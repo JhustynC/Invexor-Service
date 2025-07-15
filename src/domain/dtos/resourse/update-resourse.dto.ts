@@ -2,8 +2,8 @@
 
 export class UpdateResourseDto{
     private constructor(
-        readonly resource_id: string,
-        readonly resourcename?: string,
+        readonly id_resource: string,
+        readonly name_resource?: string,
         readonly measure?: string,
         readonly currency?: string,
         readonly description?: string,
@@ -12,7 +12,7 @@ export class UpdateResourseDto{
     public get values(){
         const values: {[key: string]:any} = {};
 
-        if(this.resourcename) values.resourcename = this.resourcename
+        if(this.name_resource) values.resourcename = this.name_resource
         if(this.measure) values.measure = this.measure
         if(this.currency) values.currency = this.currency
         if(this.description) values.description = this.description
@@ -21,17 +21,17 @@ export class UpdateResourseDto{
     }
 
     static create(props: {[key:string]:any}): [string?, UpdateResourseDto?] {
-        const {resource_id, resourcename, measure, currency, description} = props
+        const {id_resource, name_resource, measure, currency, description} = props
 
-        if(resourcename){
+        if(name_resource){
             //? Validations
         }
 
         return [
             undefined, 
             new UpdateResourseDto(
-                resource_id, 
-                resourcename, 
+                id_resource, 
+                name_resource, 
                 measure, 
                 currency, 
                 description)]

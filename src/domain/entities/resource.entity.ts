@@ -1,6 +1,6 @@
 export interface ResourceOptions{
-    readonly resource_id: string;
-    readonly resourcename: string;
+    readonly id_resource: string;
+    readonly name_resource: string;
     readonly measure: string;
     readonly currency: string;
     readonly description: string;
@@ -8,16 +8,16 @@ export interface ResourceOptions{
 }
 //////////////////////connect with entity type
 export class ResourceEntity {
-    resource_id: string;
-    resourcename: string;
+    id_resource: string;
+    name_resource: string;
     measure: string;
     description: string;
     currency: string;
     id_entity: Int16Array;
 
-    constructor({resource_id,resourcename, measure, description, currency, id_entity}: ResourceOptions){
-        this.resource_id = resource_id;
-        this.resourcename = resourcename;
+    constructor({id_resource: resource_id,name_resource: resourcename, measure, description, currency, id_entity}: ResourceOptions){
+        this.id_resource = resource_id;
+        this.name_resource = resourcename;
         this.measure = measure;
         this.description = description;
         this.currency = currency;
@@ -40,8 +40,8 @@ export class ResourceEntity {
         }
     
         return new ResourceEntity({
-            resource_id: id_resource,
-            resourcename: name_resource,
+            id_resource: id_resource,
+            name_resource: name_resource,
             measure,
             description,
             currency,

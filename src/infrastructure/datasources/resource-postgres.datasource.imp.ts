@@ -9,8 +9,8 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     async saveResource(resource: CreateResourseDto): Promise<ResourceEntity> {
         const newResource = await prisma.resource.create({
             data: {
-                id_resource: resource.resource_id,
-                name_resource: resource.resourcename,
+                id_resource: resource.id_resource,
+                name_resource: resource.name_resource,
                 measure: resource.measure,
                 currency: resource.currency,
                 description: resource.description,
@@ -37,13 +37,13 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     async updateResource(resource: UpdateResourseDto): Promise<ResourceEntity | undefined> {
         
         const updateData: any = {};
-        if (resource.resourcename) updateData.name_resource = resource.resourcename;
+        if (resource.name_resource) updateData.name_resource = resource.name_resource;
         if (resource.measure) updateData.measure = resource.measure;
         if (resource.currency) updateData.currency = resource.currency;
         if (resource.description) updateData.description = resource.description;
 
         const updateResource = await prisma.resource.update({
-            where: {id_resource: resource.resource_id},
+            where: {id_resource: resource.id_resource},
             data: updateData
         })
 
@@ -51,9 +51,9 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
         return ResourceEntity.fromObject(updateResource);
     }
     
-    async deleteResource(id: string): Promise<ResourceEntity> {
+    async deleteResource(id_resource: string): Promise<ResourceEntity> {
         const deleteResource = await prisma.resource.delete({
-            where: {id_resource: id}
+            where: {id_resource: id_resource}
         })
         if(!deleteResource) throw new Error("Something happened while attempting to delete data");
         return ResourceEntity.fromObject(deleteResource);
