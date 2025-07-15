@@ -38,7 +38,7 @@ export class AreaRoutes {
          *       404:
          *         description: Area not found
          */
-        router.get('/:area_id', areaController.getArea);
+        router.get('/:id_area', areaController.getArea);
 
         /**
          * @swagger
@@ -94,7 +94,7 @@ export class AreaRoutes {
          *       404:
          *         description: Area not found
          */
-        router.put('/:area_id', areaController.updateArea);
+        router.put('/:id_area', areaController.updateArea);
 
         /**
          * @swagger
@@ -113,7 +113,7 @@ export class AreaRoutes {
          *       404:
          *         description: Area not found
          */
-        router.delete('/:area_id', areaController.deleteArea);
+        router.delete('/:id_area', areaController.deleteArea);
 
         return router;
     }    

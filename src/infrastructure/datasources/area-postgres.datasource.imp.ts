@@ -9,12 +9,12 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
     async saveArea(area: CreateAreaDto): Promise<AreaEntity> {
         const newArea = await prisma.area.create({
             data: {
-                id_area: String(area.area_id),
-                name_area: area.areaname,
-                id_branch: area.branch_id,
+                id_area: String(area.id_area),
+                name_area: area.name_area,
+                id_branch: area.id_branch,
                 description: area.description,
-                state: area.active,
-                id_pattern_area: area.pattern_area_id,
+                state: area.state,
+                id_pattern_area: area.id_pattern_area,
                 phone: area.phone,
                 id_entity: area.id_entity
             }
@@ -36,24 +36,25 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
     async updateArea(area: UpdateAreaDto): Promise<AreaEntity | undefined> {
 
         const updateData: any={};
-        if(area.areaname) updateData.areaname = area.areaname;
-        if(area.active) updateData.active = area.active;
+        if(area.id_area) updateData.id_area = area.id_area;
+        if(area.name_area) updateData.name_area = area.name_area;
+        if(area.state) updateData.state = area.state;
         if(area.description) updateData.description = area.description;
-        if(area.branch_id) updateData.branch_id = area.branch_id;
-        if(area.pattern_area_id) updateData.pattern_area_id = area.pattern_area_id
+        if(area.id_branch) updateData.id_branch = area.id_branch;
+        if(area.id_pattern_area) updateData.id_pattern_area = area.id_pattern_area
         if(area.phone) updateData.phone = area.phone;
 
         // Map UpdateAreaDto fields to match the database column names
         const mappedUpdateData: any = {};
-        if (area.areaname) mappedUpdateData.name_area = area.areaname;
-        if (area.active !== undefined) mappedUpdateData.state = area.active;
+        if (area.name_area) mappedUpdateData.name_area = area.name_area;
+        if (area.state !== undefined) mappedUpdateData.state = area.state;
         if (area.description) mappedUpdateData.description = area.description;
-        if (area.branch_id) mappedUpdateData.id_branch = area.branch_id;
-        if (area.pattern_area_id) mappedUpdateData.id_pattern_area = area.pattern_area_id;
+        if (area.id_branch) mappedUpdateData.id_branch = area.id_branch;
+        if (area.id_pattern_area) mappedUpdateData.id_pattern_area = area.id_pattern_area;
         if (area.phone) mappedUpdateData.phone = area.phone;
 
         const updateArea = await prisma.area.update({
-            where: { id_area: String(area.area_id) },
+            where: { id_area: String(area.id_area) },
             data: mappedUpdateData
         });
 

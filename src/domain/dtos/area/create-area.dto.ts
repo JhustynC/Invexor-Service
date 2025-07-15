@@ -3,39 +3,39 @@ import { AreaOptions } from "../../entities/area.entity";
 
 export class CreateAreaDto{
     private constructor(
-        readonly area_id: string,
-        readonly areaname: string,
-        readonly pattern_area_id: string | null,
-        readonly branch_id: string,
-        readonly phone: string,
-        readonly description: string,
-        readonly active: boolean,
-        readonly id_entity: number 
+            readonly id_area: string,
+            readonly name_area: string,
+            readonly id_pattern_area: string | null,
+            readonly id_branch: string,
+            readonly phone: string,
+            readonly description: string,
+            readonly state: boolean,
+            readonly id_entity: number
     ){}
 
     static create(props: Partial<AreaOptions>): [string?, CreateAreaDto?]{
-        const {area_id, areaname, pattern_area_id, branch_id, phone, description, active, id_entity } = props
+        const {id_area, name_area, id_pattern_area, id_branch, phone, description, state, id_entity } = props
 
         //! Validations
-        if(!area_id) return ["area_id is required", undefined];
-        if(!areaname) return ["areaname is required", undefined];
-        if(!branch_id) return ["branch_id is required", undefined];
+        if(!id_area) return ["id_area is required", undefined];
+        if(!name_area) return ["name_area is required", undefined];
+        if(!id_branch) return ["id_branch is required", undefined];
         if(!phone) return ["phone is required", undefined];
         if(!description) return ["description is required", undefined];
-        if(typeof active !== 'boolean') return ["active must be boolean", undefined];
+        if(typeof state !== 'boolean') return ["state must be boolean", undefined];
         if(typeof id_entity !== 'number') return ["id_entity must be a number", undefined];
         // pattern_area_id puede ser string o null
 
         return [
             undefined,
             new CreateAreaDto(
-                area_id, 
-                areaname, 
-                pattern_area_id ?? null, 
-                branch_id, 
-                phone, 
-                description, 
-                active,
+                id_area,
+                name_area,
+                id_pattern_area ?? null,
+                id_branch,
+                phone,
+                description,
+                state,
                 id_entity
             )
         ]

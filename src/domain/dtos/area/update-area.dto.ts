@@ -1,12 +1,13 @@
 export class UpdateAreaDto{
     private constructor(
-        readonly area_id: Int16Array,
-        readonly areaname: string,
-        readonly pattern_area_id: Int16Array,
-        readonly branch_id: Int16Array,
-        readonly phone: string,
-        readonly description: string,
-        readonly active: boolean,
+        readonly id_area: string,
+        readonly name_area?: string,
+        readonly id_pattern_area?: string | null,
+        readonly id_branch?: string,
+        readonly phone?: string,
+        readonly description?: string,
+        readonly state?: boolean,
+        readonly id_entity?: number
     ){}
 
     public get values(){
@@ -16,12 +17,12 @@ export class UpdateAreaDto{
     }
 
     static create(props: {[key:string]:any}): [string?, UpdateAreaDto?]{
-        const {area_id, areaname, pattern_area_id, branch_id, phone, description, active} = props
+        const {id_area, name_area, id_pattern_area, id_branch, phone, description, state, id_entity} = props
 
-        if(areaname){
+        if(name_area){
             //? Validations
         }
 
-        return [undefined, new UpdateAreaDto(area_id, areaname, pattern_area_id, branch_id, phone, description, active)]
+        return [undefined, new UpdateAreaDto(id_area, name_area, id_pattern_area, id_branch, phone, description, state, id_entity)]
     }
 }

@@ -9,11 +9,11 @@ export class AreaController {
 
     public getArea: RequestHandler = (req, res) => {
         //? Get necessary data from query params
-        const {area_id} = req.params;
+        const {id_area} = req.params;
 
         //? We use the specific use-case
         new AreaUseCases(this.areaRepository)
-        .getAreaById(area_id)
+        .getAreaById(id_area)
         .then((area) => res.json(area))
         .catch((error) => res.status(500).json({error: error.message}));
     }
@@ -41,8 +41,8 @@ export class AreaController {
     }
 
     public updateArea: RequestHandler = (req, res) => {
-        const { area_id } =  req.params;
-        const obj = {...req.body, area_id};
+        const { id_area } =  req.params;
+        const obj = {...req.body, id_area};
         const [error, area] = UpdateAreaDto.create(obj);
 
         if(error){
@@ -57,10 +57,10 @@ export class AreaController {
     }
 
     public deleteArea: RequestHandler = (req, res) => {
-        const {area_id} = req.params;
+        const {id_area} = req.params;
 
         new AreaUseCases(this.areaRepository)
-        .deleteArea(area_id)
+        .deleteArea(id_area)
         .then((area) => res.json(area))
         .catch((error) => res.status(404).json({error: error.message}));
     }

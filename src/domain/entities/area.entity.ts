@@ -1,52 +1,52 @@
 export interface AreaOptions{
-    readonly area_id: string;
-    readonly areaname: string;
-    readonly pattern_area_id: string;
-    readonly branch_id: string;
+    readonly id_area: string;
+    readonly name_area: string;
+    readonly id_pattern_area: string | null;
+    readonly id_branch: string;
     readonly phone: string;
     readonly description: string;
-    readonly active: boolean;
+    readonly state: boolean;
     readonly id_entity: number;
 }
 //////////////////////connect with e
 // ntity type
 export class AreaEntity {
-    area_id: string;
-    areaname: string;
-    pattern_area_id: string;
-    branch_id: string;
+    id_area: string;
+    name_area: string;
+    id_pattern_area: string | null;
+    id_branch: string;
     phone: string;
     description: string;
-    active: boolean;
+    state: boolean;
     id_entity: number;
 
-    constructor({area_id, areaname, pattern_area_id, branch_id, phone, description, active, id_entity}: AreaOptions){
-        this.area_id = area_id;
-        this.areaname = areaname;
-        this.pattern_area_id = pattern_area_id;
-        this.branch_id = branch_id;
+    constructor({id_area, name_area, id_pattern_area, id_branch, phone, description, state, id_entity}: AreaOptions){
+        this.id_area = id_area;
+        this.name_area = name_area;
+        this.id_pattern_area = id_pattern_area;
+        this.id_branch = id_branch;
         this.phone = phone;
         this.description = description;
-        this.active = active;
+        this.state = state;
         this.id_entity = id_entity;
     }
 
     //? Mapper 
     static fromObject(postgresObject: {[key: string]: any}): AreaEntity {
-        const {area_id, areaname, pattern_area_id, branch_id, phone, description, active,id_entity } = postgresObject;
+        const {id_area, name_area, id_pattern_area, id_branch, phone, description, state, id_entity } = postgresObject;
 
-        if(!area_id || !areaname || !pattern_area_id || !branch_id || !phone || !description || !active){
+        if(!id_area || !name_area || !id_branch || !phone || !description || !state || !id_entity){
             throw new Error("More prop are required");
         }
 
         return new AreaEntity({
-            area_id,
-            areaname,
-            pattern_area_id,
-            branch_id,
+            id_area,
+            name_area,
+            id_pattern_area,
+            id_branch,
             phone,
             description,
-            active,
+            state,
             id_entity
         });
     }
