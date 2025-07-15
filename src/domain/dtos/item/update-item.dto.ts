@@ -1,39 +1,42 @@
-
-
 export class UpdateItemDto{
     private constructor(
-        readonly item_id: Int16Array,
-        readonly itemname?: string,
-        readonly description?: string,
-        readonly provider?: string,
-        readonly item_type_ids?: Int16Array[],
+        readonly id_item: string,
+        readonly name_item: string,
+        readonly description: string,
+        readonly provider: string,
+        readonly id_item_type: number,
+        readonly id_entity: number
     ){}
 
     public get values(){
         const values: {[key: string]:any} = {};
 
-        if(this.itemname) values.itemname = this.itemname;
+        if(this.name_item) values.name_item = this.name_item;
         if(this.description) values.description = this.description;
         if(this.provider) values.provider = this.provider;
-        if(this.item_type_ids) values.item_type_ids = this.item_type_ids;
+        if(this.id_item_type) values.id_item_type = this.id_item_type;
+        if(this.id_entity) values.id_entity = this.id_entity;
 
         return values
     }
 
     static create(props: {[key:string]:any}): [string?, UpdateItemDto?]{
-        const {item_id, itemname, description, provider, item_type_ids} = props;
+        const {id_item, name_item, description, provider, id_item_type, id_entity} = props;
 
-        if(itemname){
+        if(name_item){
             //? Validations
         }
 
         return [
             undefined,
             new UpdateItemDto(
-                item_id, 
-                itemname, 
-                description, 
-                provider, 
-                item_type_ids)]
+                id_item,
+                name_item,
+                description,
+                provider,
+                id_item_type,
+                id_entity
+            )
+        ]
     }
 }
