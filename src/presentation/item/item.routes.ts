@@ -94,7 +94,7 @@ export class ItemRoutes {
          *       404:
          *         description: User not found
          */
-        router.put('/:item_id', itemController.updateItem);
+        router.put('/:id_item', itemController.updateItem);
 
         /**
          * @swagger
@@ -113,7 +113,7 @@ export class ItemRoutes {
          *       404:
          *         description: User not found
          */
-        router.delete('/:item_id', itemController.deleteItem);
+        router.delete('/:id_item', itemController.deleteItem);
      
         return router;
     }    

@@ -1,5 +1,3 @@
-
-
 export class UpdateResourseDto{
     private constructor(
         readonly resource_id: string,

@@ -41,8 +41,8 @@ export class ItemController {
     }
 
     public updateItem: RequestHandler = (req, res) => {
-        const { item_id } =  req.params;
-        const obj = {...req.body, item_id};
+        const { id_item } =  req.params;
+        const obj = {...req.body, id_item: id_item};
         const [error, item] = UpdateItemDto.create(obj);
 
         if(error){
@@ -57,10 +57,10 @@ export class ItemController {
     }
 
     public deleteItem: RequestHandler = (req, res) => {
-        const {item_id} = req.params;
+        const {id_item} = req.params;
 
         new ItemUseCases(this.itemRepository)
-        .deleteItem(item_id)
+        .deleteItem(id_item)
         .then((item) => res.json(item))
         .catch((error) => res.status(404).json({error: error.message}));
     }
