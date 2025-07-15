@@ -60,10 +60,10 @@ export class UserController {
     }
 
     public deleteUser: RequestHandler = (req, res) => {
-        const {user_id} = req.params;
+        const {id_user} = req.params;
 
         new UserUseCases(this.userRepository)
-        .deleteUser(user_id)
+        .deleteUser(id_user)
         .then((user) => res.json(user))
         .catch((error) => res.status(404).json({error: error.message}));
     }

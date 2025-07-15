@@ -55,31 +55,71 @@ export class PostgresUserDatasourceImp implements AbsUserDatasource{
         //throw new Error("Method not implemented.");
     }
     async updateUser(user: UpdateUserDto): Promise<UserEntity | undefined> {
-        //const currentEmail = user.email
-        //const neew
-        const updateData: any = {};
-        if (user.name_user) updateData.name_user = user.name_user;
-        if (user.email) updateData.email = user.email;
-        if (user.password) updateData.password = user.password;
-        if (user.user_role_ids) updateData.user_role_ids = user.user_role_ids
+    const updateData: any = {};
+    console.log("nombre_usuario")
+    console.log(user.name_user)
+    if (user.name_user) updateData.name_user = user.name_user;
+    if (user.email) updateData.email = user.email;
+    if (user.password) updateData.password = user.password;
 
-        const updateUser = await prisma.user.update({
-            where: {id_user: user.id_user},
-            data: updateData
-        })
+    // Primero actualizamos los campos básicos del usuario
+    const updatedUser = await prisma.user.update({
+        where: { id_user: user.id_user },
+        data: updateData
+    });
 
-        if (!updateUser) return undefined;
-        return UserEntity.fromObject(updateUser)
+    // Si vienen nuevos roles, los actualizamos en la tabla intermedia
+    if (user.user_role_ids && user.user_role_ids.length > 0) {
+        // 🔥 1. Borramos relaciones anteriores
+        await prisma.userUserRol.deleteMany({
+            where: { id_user: user.id_user }
+        });
 
-        //throw new Error("Method not implemented.");
+        // ✅ 2. Creamos nuevas relaciones
+        await prisma.userUserRol.createMany({
+            data: user.user_role_ids.map((roleId) => ({
+                id_user: user.id_user,
+                id_user_rol: roleId
+            }))
+        });
     }
 
-    async deleteUser(user_id: string): Promise<UserEntity> {
-        const deleteUser = await prisma.user.delete({
-            where: {id_user: user_id}
-        })
-        if (!deleteUser) throw new Error("Something happened while attempting to delete data");
-        return UserEntity.fromObject(deleteUser);
+    // Ahora incluimos los roles actualizados
+    const userWithRoles = await prisma.user.findUnique({
+        where: { id_user: user.id_user },
+        include: { user_user_roles: true }
+    });
+
+    if (!userWithRoles) return undefined;
+
+    return UserEntity.fromObject(userWithRoles);
+}
+
+
+    async deleteUser(id_user: string): Promise<UserEntity> {
+
+        // Obtener el usuario y sus roles antes de eliminar
+        const userToDelete = await prisma.user.findUnique({
+            where: { id_user },
+            include: { user_user_roles: true }
+        });
+
+        if (!userToDelete) {
+            throw new Error("User not found");
+        }
+
+        // Eliminar relaciones
+        await prisma.userUserRol.deleteMany({
+            where: { id_user }
+        });
+
+        // Eliminar usuario
+        await prisma.user.delete({
+            where: { id_user }
+        });
+
+        // Retornar la entidad creada desde los datos obtenidos previamente
+        return UserEntity.fromObject(userToDelete);
     }
 
     async disconnet(): Promise<void> {

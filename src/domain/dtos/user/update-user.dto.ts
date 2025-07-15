@@ -4,7 +4,7 @@ export class UpdateUserDto{
         readonly name_user?: string,
         readonly email?: string,
         readonly password?: string,
-        readonly user_role_ids?: Int16Array[],
+        readonly user_role_ids?: number[],
     ){}
 
     public get values(){
@@ -19,9 +19,9 @@ export class UpdateUserDto{
     }
 
     static create(props: {[key:string]:any}): [string?, UpdateUserDto?] {
-        const {id_user, username, email, password, user_role_ids} = props;
+        const {id_user, name_user, email, password, user_role_ids} = props;
         
-        if(username){
+        if(name_user){
             //? Validations
         }
 
@@ -29,7 +29,7 @@ export class UpdateUserDto{
             undefined, 
             new UpdateUserDto(
                 id_user, 
-                username, 
+                name_user, 
                 email, 
                 password, 
                 user_role_ids)]

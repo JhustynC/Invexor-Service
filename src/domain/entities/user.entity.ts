@@ -22,25 +22,35 @@ export class UserEntity {
     }
 
     //? Mapper 
-    static fromObject(postgresObject: {[key: string]: any}): UserEntity {
-        const {id_user, name_user, email, password, user_user_roles} = postgresObject;
+    static fromObject(postgresObject: { [key: string]: any }): UserEntity {
+    const { id_user, name_user, email, password } = postgresObject;
 
-        console.log(postgresObject)
-
-        if(!id_user || !name_user || !email || !password || !user_user_roles){
-            throw new Error("More prop are required");
-        }
-
-        const user_role_ids = user_user_roles.map((role: any) => role.id_user_rol);
-
-        
-
-        return new UserEntity({
-            id_user,
-            name_user,
-            email,
-            password,
-            user_role_ids
-        });
+    if (!id_user || !name_user || !email || !password) {
+        throw new Error("More props are required");
     }
+
+    // Detectar de dónde vienen los roles (GET o POST)
+    let user_role_ids: number[] = [];
+
+    if (Array.isArray(postgresObject.user_user_roles)) {
+        // Estructura del GET
+        user_role_ids = postgresObject.user_user_roles.map(
+            (role: any) => role.id_user_rol
+        );
+    } else if (Array.isArray(postgresObject.user_role_ids)) {
+        // Estructura del POST (manual)
+        user_role_ids = postgresObject.user_role_ids;
+    } else {
+        throw new Error("User roles are missing or malformed");
+    }
+
+    return new UserEntity({
+        id_user,
+        name_user,
+        email,
+        password,
+        user_role_ids
+    });
+    }
+
 }
