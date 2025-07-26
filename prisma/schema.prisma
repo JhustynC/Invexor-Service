@@ -42,6 +42,20 @@ model Entity {
   entity_branches  EntityBranch[]
   entity_items     EntityItem[]
   entity_resources EntityResource[]
+
+  // Relaciones de propiedad entre entidades
+  entities_owned EntityOwnership[] @relation("EntityOwners")
+  entities_owner EntityOwnership[] @relation("EntityOwned")
+}
+
+model EntityOwnership {
+  id_owner_entity     Int
+  id_owned_entity     Int
+
+  owner_entity Entity @relation("EntityOwners", fields: [id_owner_entity], references: [id_entity])
+  owned_entity Entity @relation("EntityOwned",  fields: [id_owned_entity], references: [id_entity])
+
+  @@id([id_owner_entity, id_owned_entity])
 }
 
 model Transaction {
