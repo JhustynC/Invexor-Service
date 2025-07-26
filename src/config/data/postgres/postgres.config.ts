@@ -1,21 +1,21 @@
 import { PrismaClient } from '@prisma/client';
+import { PostgresDatabase } from './init';
 
 class PostgresConfig {
     private static instance: PrismaClient;
 
-    public static getInstance(): PrismaClient {
+    public static async getInstance(): Promise<PrismaClient> {
         if (!PostgresConfig.instance) {
-            PostgresConfig.instance = new PrismaClient();
+            PostgresConfig.instance = await PostgresDatabase.connect();
         }
         return PostgresConfig.instance;
     }
 
     public static async disconnect(): Promise<void> {
-        if (PostgresConfig.instance) {
-            await PostgresConfig.instance.$disconnect();
-        }
+        await PostgresDatabase.disconnect();
     }
 }
 
-export const prisma = PostgresConfig.getInstance();
+// Initialize and export the prisma instance
+export const prisma = PostgresDatabase.getInstance();
 export default PostgresConfig; 
