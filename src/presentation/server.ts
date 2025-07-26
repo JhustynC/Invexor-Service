@@ -58,11 +58,15 @@ export class Server {
             allowedHeaders: ['Content-Type', 'Authorization']
         }));
         
+        //* Swagger Documentation
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+            // explorer: true,
+            // customCss: '.swagger-ui .topbar { display: none }',
+            customSiteTitle: 'Invexor Service API Documentation'
+        }));
+
         //* Routes
         this.app.use(this.routes);
-
-        //* Swagger
-        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
         //* Error Handling 
         this.routes.use(
@@ -79,7 +83,9 @@ export class Server {
 
         //* Start Server
         this.http = this.app.listen(this.port, () => {
-            console.log(`Serve is running  on http://localhost:${this.port}`);
+            console.log(`🚀 Server is running on http://localhost:${this.port}`);
+            console.log(`📚 API Documentation available at http://localhost:${this.port}/api-docs`);
+            console.log(`🔍 Health check available at http://localhost:${this.port}/api`);
         })
     }
 
@@ -93,7 +99,7 @@ export class Server {
     public async stop(){
         try{
             this.http?.close;
-            console.log("Sever is stopped");
+            console.log("Server is stopped");
         }catch(error){
             throw `Error: Failed to stop server\n ${error}`;
         }

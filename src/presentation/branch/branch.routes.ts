@@ -12,71 +12,102 @@ export class BranchRoutes {
 
         /**
          * @swagger
-         * /user:
+         * /branch:
          *   get:
-         *     summary: Get all users
+         *     summary: Get all branches
+         *     tags: [Branches]
          *     responses:
          *       200:
          *         description: List of branches
+         *       500:
+         *         description: Internal server error
          */
         router.get('/', branchController.getBranches);
 
         /**
          * @swagger
-         * /user/{email}:
+         * /branch/{id_branch}:
          *   get:
-         *     summary: Get a user by email
+         *     summary: Get a branch by ID
+         *     tags: [Branches]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_branch
          *         required: true
          *         schema:
          *           type: string
+         *         description: Branch ID
          *     responses:
          *       200:
-         *         description: User found
+         *         description: Branch found
          *       404:
-         *         description: User not found
+         *         description: Branch not found
+         *       500:
+         *         description: Internal server error
          */
         router.get('/:id_branch', branchController.getBranch);
 
         /**
          * @swagger
-         * /user:
+         * /branch:
          *   post:
-         *     summary: Create a new user
+         *     summary: Create a new branch
+         *     tags: [Branches]
          *     requestBody:
          *       required: true
          *       content:
          *         application/json:
          *           schema:
          *             type: object
+         *             required:
+         *               - id_branch
+         *               - id_entity
+         *               - name_branch
+         *               - city
+         *               - phone
+         *               - state
          *             properties:
-         *               username:
+         *               id_branch:
          *                 type: string
-         *               email:
+         *                 description: Unique branch identifier
+         *               id_entity:
+         *                 type: integer
+         *                 description: Entity ID
+         *               name_branch:
          *                 type: string
-         *               password:
+         *                 description: Name of the branch
+         *               city:
          *                 type: string
+         *                 description: City where the branch is located
+         *               phone:
+         *                 type: string
+         *                 description: Branch phone number
+         *               state:
+         *                 type: boolean
+         *                 description: Whether the branch is active
          *     responses:
          *       200:
-         *         description: User created
+         *         description: Branch created successfully
          *       400:
-         *         description: Invalid data
+         *         description: Invalid data provided
+         *       404:
+         *         description: Branch creation failed
          */
         router.post('/', branchController.createBranch);
 
         /**
          * @swagger
-         * /user/{email}:
+         * /branch/{id_branch}:
          *   put:
-         *     summary: Update a user
+         *     summary: Update a branch
+         *     tags: [Branches]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_branch
          *         required: true
          *         schema:
          *           type: string
+         *         description: Branch ID to update
          *     requestBody:
          *       required: true
          *       content:
@@ -84,34 +115,49 @@ export class BranchRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               username:
+         *               id_entity:
+         *                 type: integer
+         *                 description: Entity ID
+         *               name_branch:
          *                 type: string
-         *               password:
+         *                 description: Name of the branch
+         *               city:
          *                 type: string
+         *                 description: City where the branch is located
+         *               phone:
+         *                 type: string
+         *                 description: Branch phone number
+         *               state:
+         *                 type: boolean
+         *                 description: Whether the branch is active
          *     responses:
          *       200:
-         *         description: User updated
+         *         description: Branch updated successfully
+         *       400:
+         *         description: Invalid data provided
          *       404:
-         *         description: User not found
+         *         description: Branch not found
          */
         router.put('/:id_branch', branchController.updateBranch);
 
         /**
          * @swagger
-         * /user/{email}:
+         * /branch/{id_branch}:
          *   delete:
-         *     summary: Delete a user
+         *     summary: Delete a branch
+         *     tags: [Branches]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_branch
          *         required: true
          *         schema:
          *           type: string
+         *         description: Branch ID to delete
          *     responses:
          *       200:
-         *         description: User deleted
+         *         description: Branch deleted successfully
          *       404:
-         *         description: User not found
+         *         description: Branch not found
          */
         router.delete('/:id_branch', branchController.deleteBranch);
      

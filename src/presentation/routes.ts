@@ -12,10 +12,34 @@ export class AppRoutes {
     static get routes(): Router {
         const router = Router();
 
-        //? Test Endpoint 
+        /**
+         * @swagger
+         * /api:
+         *   get:
+         *     summary: API Health Check
+         *     tags: [Health]
+         *     responses:
+         *       200:
+         *         description: API is running
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 message:
+         *                   type: string
+         *                   example: "Invexor Service API is running"
+         *                 status:
+         *                   type: string
+         *                   example: "OK"
+         */
         router.use('/api', (req, res) => {
-            console.log('REQUEST');
-            res.json({message: "REQUEST"});
+            console.log('API Health Check Request');
+            res.json({
+                message: "Invexor Service API is running",
+                status: "OK",
+                timestamp: new Date().toISOString()
+            });
         });
 
         //? Area route endpoint
@@ -30,7 +54,7 @@ export class AppRoutes {
         //? Item route endpoint
         router.use('/item', ItemRoutes.routes);
         
-        //? Item route endpoint
+        //? ItemType route endpoint
         router.use('/itemType', ItemTypeRoutes.routes);
 
         //? Resource route endpoint
@@ -39,7 +63,7 @@ export class AppRoutes {
         //? User route endpoint
         router.use('/user', UserRoutes.routes);
 
-        //? User route endpoint
+        //? UserRol route endpoint
         router.use('/userRol', UserRolRoutes.routes);
 
         return router;

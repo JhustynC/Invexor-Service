@@ -2,7 +2,6 @@ import { Router } from "express";
 import { PostgresUserRolDatasourceImp } from "../../infrastructure/datasources/userRol-postgres.datasource.imp";
 import { UserRolRepositoryImp } from "../../infrastructure/repositories/userRol.repository.imp";
 import { UserRolController } from "./userRol.controller";
-import swaggerJSDoc from "swagger-jsdoc";
 
 export class UserRolRoutes{
     static get routes(): Router{
@@ -13,76 +12,91 @@ export class UserRolRoutes{
         
         /**
          * @swagger
-         * /user:
+         * /userRol:
          *   get:
-         *     summary: Get all users
+         *     summary: Get all user roles
+         *     tags: [UserRoles]
          *     responses:
          *       200:
-         *         description: List of users
+         *         description: List of user roles
+         *       500:
+         *         description: Internal server error
          */
         router.get('/', userRolController.getUserRols);
 
         /**
          * @swagger
-         * /user/{user_id}:
+         * /userRol/{id_user_rol}:
          *   get:
-         *     summary: Get a user by ID
+         *     summary: Get a user role by ID
+         *     tags: [UserRoles]
          *     parameters:
          *       - in: path
-         *         name: user_id
+         *         name: id_user_rol
          *         required: true
          *         schema:
-         *           type: string
+         *           type: integer
+         *         description: User role ID
          *     responses:
          *       200:
-         *         description: User found
+         *         description: User role found
          *       404:
-         *         description: User not found
+         *         description: User role not found
+         *       500:
+         *         description: Internal server error
          */
         router.get('/:id_user_rol', userRolController.getUserRol);
 
         /**
          * @swagger
-         * /user:
+         * /userRol:
          *   post:
-         *     summary: Create a new user
+         *     summary: Create a new user role
+         *     tags: [UserRoles]
          *     requestBody:
          *       required: true
          *       content:
          *         application/json:
          *           schema:
          *             type: object
+         *             required:
+         *               - id_user_rol
+         *               - name_user_rol
          *             properties:
-         *               username:
+         *               id_user_rol:
+         *                 type: integer
+         *                 description: Unique user role identifier
+         *               name_user_rol:
          *                 type: string
-         *               email:
-         *                 type: string
-         *               password:
-         *                 type: string
+         *                 description: Name of the user role
          *     responses:
          *       200:
-         *         description: User created
+         *         description: User role created successfully
          *       400:
-         *         description: Invalid data
+         *         description: Invalid data provided
+         *       404:
+         *         description: User role creation failed
          */
         router.post('/', userRolController.createUserRol);
 
         /**
          * @swagger
-         * /user/{user_id}:
+         * /userRol/{id_user_rol}:
          *   delete:
-         *     summary: Delete a user
+         *     summary: Delete a user role
+         *     tags: [UserRoles]
          *     parameters:
          *       - in: path
-         *         name: user_id
+         *         name: id_user_rol
          *         required: true
          *         schema:
-         *           type: string
+         *           type: integer
+         *         description: User role ID to delete
          *     responses:
          *       200:
-         *         description: User deleted
+         *         description: User role deleted successfully
          *       404:
-         *         description: User not found
+         *         description: User role not found
          */
         router.delete('/:id_user_rol', userRolController.deleteUserRol);
 

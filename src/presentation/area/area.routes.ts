@@ -12,12 +12,15 @@ export class AreaRoutes {
 
         /**
          * @swagger
-         * /user:
+         * /area:
          *   get:
-         *     summary: Get all users
+         *     summary: Get all areas
+         *     tags: [Areas]
          *     responses:
          *       200:
          *         description: List of areas
+         *       500:
+         *         description: Internal server error
          */
         router.get('/', areaController.getAreas);
 
@@ -25,18 +28,22 @@ export class AreaRoutes {
          * @swagger
          * /area/{area_id}:
          *   get:
-         *     summary: Get a area by ID
+         *     summary: Get an area by ID
+         *     tags: [Areas]
          *     parameters:
          *       - in: path
          *         name: area_id
          *         required: true
          *         schema:
          *           type: string
+         *         description: Area ID
          *     responses:
          *       200:
-         *         description: User found
+         *         description: Area found
          *       404:
          *         description: Area not found
+         *       500:
+         *         description: Internal server error
          */
         router.get('/:area_id', areaController.getArea);
 
@@ -45,24 +52,54 @@ export class AreaRoutes {
          * /area:
          *   post:
          *     summary: Create a new area
+         *     tags: [Areas]
          *     requestBody:
          *       required: true
          *       content:
          *         application/json:
          *           schema:
          *             type: object
+         *             required:
+         *               - area_id
+         *               - areaname
+         *               - branch_id
+         *               - phone
+         *               - description
+         *               - active
+         *               - id_entity
          *             properties:
-         *               username:
+         *               area_id:
          *                 type: string
-         *               email:
+         *                 description: Unique area identifier
+         *               areaname:
          *                 type: string
-         *               password:
+         *                 description: Name of the area
+         *               pattern_area_id:
          *                 type: string
+         *                 nullable: true
+         *                 description: Pattern area ID (optional)
+         *               branch_id:
+         *                 type: string
+         *                 description: Branch ID this area belongs to
+         *               phone:
+         *                 type: string
+         *                 description: Area phone number
+         *               description:
+         *                 type: string
+         *                 description: Area description
+         *               active:
+         *                 type: boolean
+         *                 description: Whether the area is active
+         *               id_entity:
+         *                 type: integer
+         *                 description: Entity ID
          *     responses:
          *       200:
-         *         description: User created
+         *         description: Area created successfully
          *       400:
-         *         description: Invalid data
+         *         description: Invalid data provided
+         *       404:
+         *         description: Area creation failed
          */
         router.post('/', areaController.createArea);
 
@@ -70,13 +107,15 @@ export class AreaRoutes {
          * @swagger
          * /area/{area_id}:
          *   put:
-         *     summary: Update a area
+         *     summary: Update an area
+         *     tags: [Areas]
          *     parameters:
          *       - in: path
          *         name: area_id
          *         required: true
          *         schema:
          *           type: string
+         *         description: Area ID to update
          *     requestBody:
          *       required: true
          *       content:
@@ -84,13 +123,33 @@ export class AreaRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               username:
+         *               areaname:
          *                 type: string
-         *               password:
+         *                 description: Name of the area
+         *               pattern_area_id:
          *                 type: string
+         *                 nullable: true
+         *                 description: Pattern area ID (optional)
+         *               branch_id:
+         *                 type: string
+         *                 description: Branch ID this area belongs to
+         *               phone:
+         *                 type: string
+         *                 description: Area phone number
+         *               description:
+         *                 type: string
+         *                 description: Area description
+         *               active:
+         *                 type: boolean
+         *                 description: Whether the area is active
+         *               id_entity:
+         *                 type: integer
+         *                 description: Entity ID
          *     responses:
          *       200:
-         *         description: User updated
+         *         description: Area updated successfully
+         *       400:
+         *         description: Invalid data provided
          *       404:
          *         description: Area not found
          */
@@ -100,16 +159,18 @@ export class AreaRoutes {
          * @swagger
          * /area/{area_id}:
          *   delete:
-         *     summary: Delete a area
+         *     summary: Delete an area
+         *     tags: [Areas]
          *     parameters:
          *       - in: path
          *         name: area_id
          *         required: true
          *         schema:
          *           type: string
+         *         description: Area ID to delete
          *     responses:
          *       200:
-         *         description: User deleted
+         *         description: Area deleted successfully
          *       404:
          *         description: Area not found
          */

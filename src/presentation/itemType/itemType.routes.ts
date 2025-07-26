@@ -12,76 +12,87 @@ export class ItemTypeRoutes {
 
         /**
          * @swagger
-         * /item:
+         * /itemType:
          *   get:
-         *     summary: Get all items
+         *     summary: Get all item types
+         *     tags: [ItemTypes]
          *     responses:
          *       200:
-         *         description: List of items
+         *         description: List of item types
+         *       500:
+         *         description: Internal server error
          */
         router.get('/', itemTypeController.getItemTypes);
 
         /**
          * @swagger
-         * /user/{email}:
+         * /itemType/{id_item_type}:
          *   get:
-         *     summary: Get a user by email
+         *     summary: Get an item type by ID
+         *     tags: [ItemTypes]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_item_type
          *         required: true
          *         schema:
-         *           type: string
+         *           type: integer
+         *         description: Item type ID
          *     responses:
          *       200:
-         *         description: User found
+         *         description: Item type found
          *       404:
-         *         description: User not found
+         *         description: Item type not found
+         *       500:
+         *         description: Internal server error
          */
         router.get('/:id_item_type', itemTypeController.getItemType);
 
         /**
          * @swagger
-         * /user:
+         * /itemType:
          *   post:
-         *     summary: Create a new user
+         *     summary: Create a new item type
+         *     tags: [ItemTypes]
          *     requestBody:
          *       required: true
          *       content:
          *         application/json:
          *           schema:
          *             type: object
+         *             required:
+         *               - name
          *             properties:
-         *               username:
+         *               name:
          *                 type: string
-         *               email:
-         *                 type: string
-         *               password:
-         *                 type: string
+         *                 description: Name of the item type
          *     responses:
          *       200:
-         *         description: User created
+         *         description: Item type created successfully
          *       400:
-         *         description: Invalid data
+         *         description: Invalid data provided
+         *       404:
+         *         description: Item type creation failed
          */
         router.post('/', itemTypeController.createItemType);
 
         /**
          * @swagger
-         * /item/{item_id}:
+         * /itemType/{id_item_type}:
          *   delete:
-         *     summary: Delete an item
+         *     summary: Delete an item type
+         *     tags: [ItemTypes]
          *     parameters:
          *       - in: path
-         *         name: item_id
+         *         name: id_item_type
          *         required: true
          *         schema:
-         *           type: string
+         *           type: integer
+         *         description: Item type ID to delete
          *     responses:
          *       200:
-         *         description: User deleted
+         *         description: Item type deleted successfully
          *       404:
-         *         description: User not found
+         *         description: Item type not found
          */
         router.delete('/:id_item_type', itemTypeController.deleteItemType);
 

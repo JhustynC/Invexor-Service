@@ -12,77 +12,88 @@ export class EntityRoutes {
 
         /**
          * @swagger
-         * /user:
+         * /entity:
          *   get:
-         *     summary: Get all users
+         *     summary: Get all entities
+         *     tags: [Entities]
          *     responses:
          *       200:
-         *         description: List of resources
+         *         description: List of entities
+         *       500:
+         *         description: Internal server error
          */
         router.get('/', entityController.getEntities);
 
         /**
          * @swagger
-         * /user/{email}:
+         * /entity/{id_entity}:
          *   get:
-         *     summary: Get a user by email
+         *     summary: Get an entity by ID
+         *     tags: [Entities]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_entity
          *         required: true
          *         schema:
          *           type: string
+         *         description: Entity ID
          *     responses:
          *       200:
-         *         description: User found
+         *         description: Entity found
          *       404:
-         *         description: User not found
+         *         description: Entity not found
+         *       500:
+         *         description: Internal server error
          */
         router.get('/:id_entity', entityController.getEntity);
 
         /**
          * @swagger
-         * /user:
+         * /entity:
          *   post:
-         *     summary: Create a new user
+         *     summary: Create a new entity
+         *     tags: [Entities]
          *     requestBody:
          *       required: true
          *       content:
          *         application/json:
          *           schema:
          *             type: object
+         *             required:
+         *               - id_entity_type
          *             properties:
-         *               username:
-         *                 type: string
-         *               email:
-         *                 type: string
-         *               password:
-         *                 type: string
+         *               id_entity_type:
+         *                 type: integer
+         *                 description: Entity type ID
          *     responses:
          *       200:
-         *         description: User created
+         *         description: Entity created successfully
          *       400:
-         *         description: Invalid data
+         *         description: Invalid data provided
+         *       404:
+         *         description: Entity creation failed
          */
         router.post('/', entityController.createEntity);
 
 
         /**
          * @swagger
-         * /user/{email}:
+         * /entity/{id_entity}:
          *   delete:
-         *     summary: Delete a user
+         *     summary: Delete an entity
+         *     tags: [Entities]
          *     parameters:
          *       - in: path
-         *         name: email
+         *         name: id_entity
          *         required: true
          *         schema:
          *           type: string
+         *         description: Entity ID to delete
          *     responses:
          *       200:
-         *         description: User deleted
+         *         description: Entity deleted successfully
          *       404:
-         *         description: User not found
+         *         description: Entity not found
          */
         router.delete('/:id_entity', entityController.deleteEntity);
 
