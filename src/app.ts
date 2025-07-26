@@ -11,6 +11,7 @@ import { Server } from "./presentation/server";
 async function main(){
 
     console.table(envs);
+    console.log();
 
     //* Initialize Mongo
     await MongoDatabase.connect({

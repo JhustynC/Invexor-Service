@@ -83,7 +83,7 @@ export class Server {
 
         //* Start Server
         this.http = this.app.listen(this.port, () => {
-            console.log(`🚀 Server is running on http://localhost:${this.port}`);
+            console.log(`\n🚀 Server is running on http://localhost:${this.port}`);
             console.log(`📚 API Documentation available at http://localhost:${this.port}/api-docs`);
             console.log(`🔍 Health check available at http://localhost:${this.port}/api`);
         })
