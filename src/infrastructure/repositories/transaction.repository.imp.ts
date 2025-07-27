@@ -22,8 +22,4 @@ export class TransactionRepositoryImp implements AbsTransactionRepository{
     deleteTransaction(id: number): Promise<TransactionEntity> {
         return this.datasource.deleteTransaction(id);
     }
-
-    getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]> {
-        return this.datasource.getTransactionsByPeriod(period, year);
-    }
 }

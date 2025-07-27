@@ -25,8 +25,4 @@ export class TransactionUseCases {
     async updateTransaction(dto: UpdateTransactionDto): Promise<TransactionEntity | undefined>{
         return await this.repository.updateTransaction(dto);
     }
-
-    async getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]> {
-        return await this.repository.getTransactionsByPeriod(period, year);
-    }
 }

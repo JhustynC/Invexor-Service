@@ -7,7 +7,7 @@ export abstract class AbsTransactionDatasource {
     abstract saveTransaction(transaction: CreateTransactionDto): Promise<TransactionEntity>;
     abstract getById(id: number): Promise<TransactionEntity | undefined>;
     abstract getAll(): Promise<TransactionEntity[]>;
-    abstract getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]>;
+
     abstract updateTransaction(transaction: UpdateTransactionDto): Promise<TransactionEntity | undefined>;
     abstract deleteTransaction(id: number): Promise<TransactionEntity>;
 }

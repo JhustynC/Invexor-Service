@@ -65,21 +65,4 @@ export class TransactionController {
         .catch((error) => res.status(404).json({error: error.message}));
     }
 
-    public getTransactionsByPeriod: RequestHandler = (req, res) => {
-        const { period, year } = req.params;
-        if (!period || (period !== 'month' && period !== 'year')) {
-            return res.status(400).json({ error: "'period' param is required and must be 'month' or 'year'" });
-        }
-        let yearNum: number | undefined = undefined;
-        if (year) {
-            yearNum = Number(year);
-            if (isNaN(yearNum)) {
-                return res.status(400).json({ error: "'year' query param must be a number" });
-            }
-        }
-        new TransactionUseCases(this.transactionRepository)
-            .getTransactionsByPeriod(period as 'month' | 'year', yearNum)
-            .then((data) => res.json(data))
-            .catch((error) => res.status(500).json({ error: error.message }));
-    }
 }
