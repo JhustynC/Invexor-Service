@@ -8,7 +8,7 @@ import { UpdateTransactionDto } from "../../domain/dtos/transaction/update-trans
 export class PostgresTransactionDatasourceImp implements AbsTransactionDatasource{
     async getById(id: number): Promise<TransactionEntity | undefined> {
         const transaction = await prisma.transaction.findUnique({
-            where: { id_transaction: id }
+            where: { transaction_id: id }
         });
         if(!transaction) return undefined
         return TransactionEntity.fromObject(transaction);

@@ -78,7 +78,7 @@ CREATE TABLE "Resource" (
 CREATE TABLE "Area" (
     "area_id" TEXT NOT NULL,
     "areaname" VARCHAR(255) NOT NULL,
-    "pattern_area_id" VARCHAR(100) NOT NULL,
+    "pattern_area_id" TEXT NOT NULL,
     "branch_id" VARCHAR(100) NOT NULL,
     "phone" VARCHAR(20) NOT NULL,
     "description" TEXT NOT NULL,
@@ -186,6 +186,9 @@ ALTER TABLE "Resource" ADD CONSTRAINT "Resource_id_entity_fkey" FOREIGN KEY ("id
 
 -- AddForeignKey
 ALTER TABLE "Area" ADD CONSTRAINT "Area_id_entity_fkey" FOREIGN KEY ("id_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Area" ADD CONSTRAINT "Area_pattern_area_id_fkey" FOREIGN KEY ("pattern_area_id") REFERENCES "Area"("area_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Branch" ADD CONSTRAINT "Branch_id_entity_fkey" FOREIGN KEY ("id_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;

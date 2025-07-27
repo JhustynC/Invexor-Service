@@ -5,7 +5,7 @@ export class CreateAreaDto{
     private constructor(
         readonly area_id: string,
         readonly areaname: string,
-        readonly pattern_area_id: string | null,
+        readonly pattern_area_id: string,
         readonly branch_id: string,
         readonly phone: string,
         readonly description: string,
@@ -24,6 +24,7 @@ export class CreateAreaDto{
         if(!description) return ["description is required", undefined];
         if(typeof active !== 'boolean') return ["active must be boolean", undefined];
         if(typeof id_entity !== 'number') return ["id_entity must be a number", undefined];
+        if(typeof pattern_area_id !== 'string') return ["pattern area must be a string", undefined];
         // pattern_area_id puede ser string o null
 
         return [
@@ -31,7 +32,7 @@ export class CreateAreaDto{
             new CreateAreaDto(
                 area_id, 
                 areaname, 
-                pattern_area_id ?? null, 
+                pattern_area_id, 
                 branch_id, 
                 phone, 
                 description, 

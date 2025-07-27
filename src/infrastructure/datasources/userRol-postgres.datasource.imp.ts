@@ -5,7 +5,7 @@ import { prisma } from "../../config/data/postgres/postgres.config";
 
 export class PostgresUserRolDatasourceImp implements AbsUserRoleDatasource{
     async saveUserRol(userRole: CreateUserRolDto): Promise<UserRolEntity> {
-        const newUserRole = await prisma.userRol.create({
+        const newUserRole = await prisma.userRole.create({
             data:{
                 id_user_rol:userRole.id_user_rol,
                name_user_rol:userRole.name_user_rol,
@@ -16,7 +16,7 @@ export class PostgresUserRolDatasourceImp implements AbsUserRoleDatasource{
     }
     
     async getUserRolById(id: number): Promise<UserRolEntity | undefined> {
-        const userRol = await prisma.userRol.findUnique({
+        const userRol = await prisma.userRole.findUnique({
             where:{id_user_rol: id}
         })
         if(!userRol) return undefined
@@ -24,12 +24,12 @@ export class PostgresUserRolDatasourceImp implements AbsUserRoleDatasource{
     }
     
     async getAllUserRols(): Promise<UserRolEntity[]> {
-        const userRols = await prisma.userRol.findMany();
+        const userRols = await prisma.userRole.findMany();
         return userRols.map((userRol) => UserRolEntity.fromObject(userRol))
     }
     
     async deleteUserRol(id: number): Promise<UserRolEntity> {
-        const deleteUserRol = await prisma.userRol.delete({
+        const deleteUserRol = await prisma.userRole.delete({
             where: {id_user_rol: id}
         })
         if (!deleteUserRol) throw new Error("Something happened while attempting to delete data");
