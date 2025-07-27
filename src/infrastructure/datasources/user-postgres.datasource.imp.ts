@@ -8,7 +8,7 @@ import { prisma } from "../../config/data/postgres/postgres.config";
 export class PostgresUserDatasourceImp implements AbsUserDatasource{
     async getById(id: string): Promise<UserEntity | undefined> {
         const user = await prisma.user.findUnique({
-            where: { id: id }
+            where: { user_id: id }
         });
         if(!user) return undefined
         return UserEntity.fromObject(user);
@@ -20,7 +20,7 @@ export class PostgresUserDatasourceImp implements AbsUserDatasource{
                 username: user.username,
                 email: user.email,
                 password: user.password,
-                user_role_ids: user.user_role_ids
+                id_entity: user.id_entity
             }
         })
 
