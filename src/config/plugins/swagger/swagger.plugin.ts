@@ -76,7 +76,19 @@ const options: swaggerJSDoc.Options = {
             {
                 name: 'Transactions',
                 description: 'Transaction management endpoints'
-            }   
+            },
+            {
+                name: 'Dashboard',
+                description: 'Dashboard analytics and reporting endpoints'
+            },
+            {
+                name: 'FormTemplates',
+                description: 'Form template management endpoints'
+            },
+            {
+                name: 'CustomProperties',
+                description: 'Custom property management endpoints'
+            }
         ]
     },
     apis: [
@@ -89,7 +101,10 @@ const options: swaggerJSDoc.Options = {
         './src/presentation/itemType/itemType.routes.ts',
         './src/presentation/resource/resource.routes.ts',
         './src/presentation/userRol/userRol.routes.ts',
-        './src/presentation/transaction/transaction.routes.ts'  
+        './src/presentation/transaction/transaction.routes.ts',
+        './src/presentation/dashboard/dashboard.routes.ts',
+        './src/presentation/form-template/form-template.routes.ts',
+        './src/presentation/custom-property/custom-property.routes.ts'
     ]
 };
 
