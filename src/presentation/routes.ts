@@ -8,6 +8,7 @@ import { EntityRoutes } from "./entity/entity.routes";
 import { ItemTypeRoutes } from "./itemType/itemType.routes";
 import { UserRolRoutes } from "./userRol/userRol.routes";
 import { FormTemplateRoutes } from "./form-template/form-template.routes";
+import { CustomPropertyRoutes } from "./custom-property/custom-property.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -69,6 +70,9 @@ export class AppRoutes {
         
         //? Templates route endpoint
         router.use('/template', FormTemplateRoutes.routes);
+
+        //? Custom Property route endpoint
+        router.use('/customProperty', CustomPropertyRoutes.routes);
 
         return router;
     }
