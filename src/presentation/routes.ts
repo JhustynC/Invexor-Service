@@ -7,6 +7,7 @@ import { ResourceRoutes } from "./resource/resource.routes";
 import { EntityRoutes } from "./entity/entity.routes";
 import { ItemTypeRoutes } from "./itemType/itemType.routes";
 import { UserRolRoutes } from "./userRol/userRol.routes";
+import { FormTemplateRoutes } from "./form-template/form-template.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -65,6 +66,9 @@ export class AppRoutes {
 
         //? UserRol route endpoint
         router.use('/userRol', UserRolRoutes.routes);
+        
+        //? Templates route endpoint
+        router.use('/template', FormTemplateRoutes.routes);
 
         return router;
     }
