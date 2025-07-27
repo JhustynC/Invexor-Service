@@ -5,8 +5,8 @@ import { TransactionEntity } from "../entities/transaction.entity";
 //? Rules
 export abstract class AbsTransactionRepository {
     abstract saveTransaction(item: CreateTransactionDto): Promise<TransactionEntity>;
-    abstract getTransactionById(id: string): Promise<TransactionEntity | undefined>;
+    abstract getTransactionById(id: number): Promise<TransactionEntity | undefined>;
     abstract getAllTransactions(): Promise<TransactionEntity[]>;
     abstract updateTransaction(item: UpdateTransactionDto): Promise<TransactionEntity | undefined>;
-    abstract deleteTransaction(id: string): Promise<TransactionEntity>;
+    abstract deleteTransaction(id: number): Promise<TransactionEntity>;
 }

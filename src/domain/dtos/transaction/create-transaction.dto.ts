@@ -4,10 +4,10 @@ import { TransactionOptions } from "../../entities/transaction.entity";
 
 export class CreateTransactionDto{
     private constructor(
-        readonly transaction_id: Int16Array,
+        readonly transaction_id: number,
         readonly transaction_date: Date,
-        readonly old_owner_id: Int16Array,
-        readonly new_owner_id: Int16Array,
+        readonly old_owner_id: number,
+        readonly new_owner_id: number,
         readonly amount: number
     ){}
 

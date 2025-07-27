@@ -1,3 +1,4 @@
+import { AbsTransactionDatasource } from "../../domain/datasources/transaction.datasource";
 import { CreateTransactionDto } from "../../domain/dtos/transaction/create-transaction.dto";
 import { UpdateTransactionDto } from "../../domain/dtos/transaction/update-transaction.dto";
 import { TransactionEntity } from "../../domain/entities/transaction.entity";
@@ -5,20 +6,20 @@ import { AbsTransactionRepository } from "../../domain/repositories/transaction.
 
 export class TransactionRepositoryImp implements AbsTransactionRepository{
 
-    constructor(private readonly datasource: AbsTransactionRepository){}
+    constructor(private readonly datasource: AbsTransactionDatasource){}
     saveTransaction(item: CreateTransactionDto): Promise<TransactionEntity> {
         return this.datasource.saveTransaction(item);
     }
-    getTransactionById(id: string): Promise<TransactionEntity | undefined> {
-        return this.datasource.getTransactionById(id);
+    getTransactionById(id: number): Promise<TransactionEntity | undefined> {
+        return this.datasource.getById(id);
     }
     getAllTransactions(): Promise<TransactionEntity[]> {
-        return this.datasource.getAllTransactions();
+        return this.datasource.getAll();
     }
     updateTransaction(item: UpdateTransactionDto): Promise<TransactionEntity | undefined> {
         return this.datasource.updateTransaction(item);
     }
-    deleteTransaction(id: string): Promise<TransactionEntity> {
+    deleteTransaction(id: number): Promise<TransactionEntity> {
         return this.datasource.deleteTransaction(id);
     }
     

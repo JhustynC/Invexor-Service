@@ -1,16 +1,16 @@
 export interface TransactionOptions{
-    readonly transaction_id: Int16Array;
+    readonly transaction_id: number;
     readonly transaction_date: Date;
-    readonly old_owner_id: Int16Array;
-    readonly new_owner_id: Int16Array;
+    readonly old_owner_id: number;
+    readonly new_owner_id: number;
     readonly amount: number;
 }
 //////////////////////connect with entity type
 export class TransactionEntity {
-    transaction_id: Int16Array;
+    transaction_id: number;
     transaction_date: Date;
-    old_owner_id: Int16Array;
-    new_owner_id: Int16Array;
+    old_owner_id: number;
+    new_owner_id: number;
     amount: number;
 
     constructor({transaction_id, transaction_date, old_owner_id, new_owner_id, amount}: TransactionOptions){
@@ -30,7 +30,7 @@ export class TransactionEntity {
 
         return new TransactionEntity({
             transaction_id,
-            transaction_date,
+            transaction_date: new Date(transaction_date), // Ensure date is a Date object
             old_owner_id,
             new_owner_id,
             amount

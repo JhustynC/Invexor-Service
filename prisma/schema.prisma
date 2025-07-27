@@ -45,7 +45,7 @@ model Entity {
 }
 
 model Transaction {
-  id_transaction   Int       @id @default(autoincrement())
+  transaction_id   Int       @id @default(autoincrement())
   date_transaction DateTime  @default(now())
   id_old_owner     Int
   id_new_owner     Int
@@ -58,13 +58,13 @@ model Transaction {
 }
 
 model TransactionEntity {
-  id_transaction Int
+  transaction_id Int
   id_entity      Int
 
-  transaction Transaction @relation(fields: [id_transaction], references: [id_transaction])
+  transaction Transaction @relation(fields: [transaction_id], references: [transaction_id])
   entity      Entity      @relation(fields: [id_entity], references: [id_entity])
 
-  @@id([id_transaction, id_entity])
+  @@id([transaction_id, id_entity])
 }
 
 model ItemType {
