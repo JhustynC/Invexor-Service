@@ -46,12 +46,12 @@ model User {
 }
 ```
 
-### 5. Generate Prisma Client (Optional)
-```bash
-npx prisma generate
-```
-
-### 6. Create database tables (Mandatory)
+### 5. Create database tables (Mandatory)
 ```bash
 npx prisma migrate dev --name init
+```
+
+### 6. Generate Prisma Client (Optional)
+```bash
+npx prisma generate
 ```
