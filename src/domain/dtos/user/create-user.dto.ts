@@ -7,20 +7,20 @@ export class CreateUserDto{
         readonly username: string,
         readonly email: string,
         readonly password: string,
-        readonly user_role_ids: Int16Array[],
+        readonly user_roles: number[],
         readonly id_entity: number,
     ){}
 
     static create(props: Partial<UserOptions>): [string?, CreateUserDto?]{
 
-        const {user_id, username, email, password, user_role_ids, id_entity} = props
+        const {user_id, username, email, password, user_roles, id_entity} = props
 
         //! Validations
         if(!user_id) return ["User-id is required", undefined];
         if(!username) return ["Username is required", undefined];
         if(!password) return ["Password is required", undefined];
         if(!email) return ["Email is required", undefined];
-        if(!user_role_ids) return ["User rol or roles are required", undefined];
+        if(!user_roles) return ["User rol or roles are required", undefined];
         if(!id_entity) return ["Id enity is required", undefined];
 
         return [
@@ -30,7 +30,7 @@ export class CreateUserDto{
                 username,
                 email,
                 password,
-                user_role_ids,
+                user_roles,
                 id_entity
             )
         ]
