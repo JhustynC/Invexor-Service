@@ -37,7 +37,7 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     async updateResource(resource: UpdateResourseDto): Promise<ResourceEntity | undefined> {
         
         const updateData: any = {};
-        if (resource.resourcename) updateData.name_resource = resource.resourcename;
+        if (resource.resourcename) updateData.resourcename = resource.resourcename;
         if (resource.measure) updateData.measure = resource.measure;
         if (resource.currency) updateData.currency = resource.currency;
         if (resource.description) updateData.description = resource.description;

@@ -36,14 +36,26 @@ export class PostgresBranchDatasourceImp implements AbsBranchDatasource{
         //throw new Error("Method not implemented.");
     }
     async updateBranch(branch: UpdateBranchDto): Promise<BranchEntity | undefined> {
+        //const updateData: any = {};
+        const existing = await prisma.branch.findUnique({ where: { id_branch: branch.id_branch } });
+
+        console.log(existing)
+        if (!existing) return undefined;
+
         const updateData: any = {};
 
-        if (branch.id_entity) updateData.id_entity = branch.id_entity;
+        //if (branch.id_entity) updateData.id_entity = branch.id_entity;
+        /*if (branch.id_entity) {
+            updateData.entity = {
+                connect: { id_entity: branch.id_entity }
+            };
+        }*/
+
         if (branch.state) updateData.state = branch.state;
         if (branch.name_branch) updateData.name_branch = branch.name_branch;
         if (branch.city) updateData.city = branch.city;
         if (branch.phone) updateData.phone = branch.phone;
-        if (branch.values) updateData.values = branch.values;
+        //if (branch.values) updateData.values = branch.values;
         
         const updateBranch = await prisma.branch.update({
             where: {id_branch: branch.id_branch},
