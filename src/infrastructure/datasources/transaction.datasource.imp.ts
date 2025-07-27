@@ -54,6 +54,41 @@ export class PostgresTransactionDatasourceImp implements AbsTransactionDatasourc
         return TransactionEntity.fromObject(deleteTransaction);
     }
 
+    async getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]> {
+        let groupBy: any;
+        let where: any = {};
+        if (year) {
+            where.date = {
+                gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                lte: new Date(`${year}-12-31T23:59:59.999Z`)
+            };
+        }
+        if (period === 'month') {
+            groupBy = {
+                by: ['month'],
+                _sum: { amount: true },
+                where: where,
+                orderBy: { month: 'asc' },
+            };
+        } else {
+            groupBy = {
+                by: ['year'],
+                _sum: { amount: true },
+                where: where,
+                orderBy: { year: 'asc' },
+            };
+        }
+        // Prisma no soporta group by month/year directo, usamos raw query
+        const results = await prisma.$queryRawUnsafe<any[]>(`
+            SELECT ${period === 'month' ? 'EXTRACT(MONTH FROM "transaction_date") as period' : 'EXTRACT(YEAR FROM "transaction_date") as period'}, COUNT(*) as total
+            FROM "Transaction"
+            ${year ? `WHERE EXTRACT(YEAR FROM "transaction_date") = ${year}` : ''}
+            GROUP BY period
+            ORDER BY period ASC
+        `);
+        return results.map(r => ({ period: r.period.toString(), total: Number(r.total) }));
+    }
+
     async disconnect(): Promise<void> {
         await prisma.$disconnect();
     }

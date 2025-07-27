@@ -5,7 +5,11 @@
   "scripts": {
     "ts": "tsx watch src/app.ts",
     "docker:up": "docker compose up -d",
-    "dev": "npm run docker:up && npm run ts"
+    "dev": "npm run docker:up && npm run ts",
+    "db:seed": "npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "",

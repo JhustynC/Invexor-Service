@@ -9,6 +9,7 @@ import { ItemTypeRoutes } from "./itemType/itemType.routes";
 import { UserRolRoutes } from "./userRol/userRol.routes";
 import { FormTemplateRoutes } from "./form-template/form-template.routes";
 import { CustomPropertyRoutes } from "./custom-property/custom-property.routes";
+import { TransactionRoutes } from "./transaction/transaction.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -73,6 +74,9 @@ export class AppRoutes {
 
         //? Custom Property route endpoint
         router.use('/customProperty', CustomPropertyRoutes.routes);
+
+        //? Transaction route endpoint
+        router.use('/transaction', TransactionRoutes.routes);
 
         return router;
     }

@@ -159,6 +159,56 @@ export class TransactionRoutes {
          *         description: Transaction not found
          */
         router.delete('/:transaction_id', transactionController.deleteTransaction);
+        
+        /**
+         * @swagger
+         * /transaction/period/{period}/{year}:
+         *   get:
+         *     summary: Get transactions by period and year
+         *     tags: [Transactions]
+         *     parameters:
+         *       - in: path
+         *         name: period
+         *         required: true
+         *         schema:
+         *           type: string
+         *           enum: [month, year]
+         *         description: Period to filter transactions
+         *       - in: path
+         *         name: year
+         *         required: true
+         *         schema:
+         *           type: integer
+         *         description: Year to filter transactions
+         *     responses:
+         *       200:
+         *         description: List of transactions
+         *       500:
+         *         description: Internal server error
+         */     
+        router.get('/period/:period/:year', transactionController.getTransactionsByPeriod);
+
+        /**
+         * @swagger
+         * /transaction/period/{period}:
+         *   get:
+         *     summary: Get transactions by period
+         *     tags: [Transactions]
+         *     parameters:
+         *       - in: path
+         *         name: period
+         *         required: true
+         *         schema:
+         *           type: string
+         *           enum: [month, year]
+         *         description: Period to filter transactions
+         *     responses:
+         *       200:
+         *         description: List of transactions
+         *       500:
+         *         description: Internal server error
+         */ 
+        router.get('/period/:period', transactionController.getTransactionsByPeriod);
 
         return router;
     }    

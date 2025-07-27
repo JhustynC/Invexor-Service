@@ -6,7 +6,8 @@ const options: swaggerJSDoc.Options = {
         info: {
             title: 'Invexor Service API',
             version: '1.0.0',
-            description: 'API for Invexor Service - Complete management system for areas, branches, entities, items, resources, users and user roles',
+            description: 'API REST for Invexor Service - Complete management system for areas, branches, entities, items, resources, transactions, and users and user roles',
+
             contact: {
                 name: 'Invexor Team',
                 email: 'support@invexor.com'
@@ -71,7 +72,11 @@ const options: swaggerJSDoc.Options = {
             {
                 name: 'UserRoles',
                 description: 'User role management endpoints'
-            }
+            },
+            {
+                name: 'Transactions',
+                description: 'Transaction management endpoints'
+            }   
         ]
     },
     apis: [
@@ -83,7 +88,8 @@ const options: swaggerJSDoc.Options = {
         './src/presentation/item/item.routes.ts',
         './src/presentation/itemType/itemType.routes.ts',
         './src/presentation/resource/resource.routes.ts',
-        './src/presentation/userRol/userRol.routes.ts'
+        './src/presentation/userRol/userRol.routes.ts',
+        './src/presentation/transaction/transaction.routes.ts'  
     ]
 };
 

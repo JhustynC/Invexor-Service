@@ -10,11 +10,11 @@ export class TransactionUseCases {
         return await this.repository.saveTransaction(dto);
     }
 
-    async deleteTransaction(id: string): Promise<TransactionEntity>{
+    async deleteTransaction(id: number): Promise<TransactionEntity>{
         return await this.repository.deleteTransaction(id);
     }
 
-    async getTransactionById(id: string): Promise<TransactionEntity | undefined>{
+    async getTransactionById(id: number): Promise<TransactionEntity | undefined>{
         return await this.repository.getTransactionById(id);
     }
 
@@ -24,5 +24,9 @@ export class TransactionUseCases {
 
     async updateTransaction(dto: UpdateTransactionDto): Promise<TransactionEntity | undefined>{
         return await this.repository.updateTransaction(dto);
+    }
+
+    async getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]> {
+        return await this.repository.getTransactionsByPeriod(period, year);
     }
 }
