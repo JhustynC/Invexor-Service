@@ -1,15 +1,7 @@
 -- CreateTable
-CREATE TABLE "EntityType" (
-    "id_entity_type" SERIAL NOT NULL,
-    "name_entity_type" VARCHAR(100) NOT NULL,
-
-    CONSTRAINT "EntityType_pkey" PRIMARY KEY ("id_entity_type")
-);
-
--- CreateTable
 CREATE TABLE "Entity" (
     "id_entity" SERIAL NOT NULL,
-    "id_entity_type" INTEGER NOT NULL,
+    "entity_type" INTEGER NOT NULL,
 
     CONSTRAINT "Entity_pkey" PRIMARY KEY ("id_entity")
 );
@@ -128,9 +120,6 @@ CREATE TABLE "UserUserRole" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "EntityType_name_entity_type_key" ON "EntityType"("name_entity_type");
-
--- CreateIndex
 CREATE UNIQUE INDEX "ItemType_name_key" ON "ItemType"("name");
 
 -- CreateIndex
@@ -153,9 +142,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_id_entity_key" ON "User"("id_entity");
-
--- AddForeignKey
-ALTER TABLE "Entity" ADD CONSTRAINT "Entity_id_entity_type_fkey" FOREIGN KEY ("id_entity_type") REFERENCES "EntityType"("id_entity_type") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EntityOwnership" ADD CONSTRAINT "EntityOwnership_id_owner_entity_fkey" FOREIGN KEY ("id_owner_entity") REFERENCES "Entity"("id_entity") ON DELETE RESTRICT ON UPDATE CASCADE;

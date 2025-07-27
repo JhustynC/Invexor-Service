@@ -8,25 +8,25 @@ async function main() {
   // Limpiar datos existentes para evitar duplicados
   await prisma.transaction.deleteMany({});
   await prisma.entity.deleteMany({});
-  await prisma.entityType.deleteMany({});
+//  await prisma.entityType.deleteMany({});
   console.log('Cleaned existing data...');
 
-  // 1. Crear EntityTypes
-  const entityTypeUser = await prisma.entityType.create({
-    data: { name_entity_type: 'User' },
-  });
-  const entityTypeCompany = await prisma.entityType.create({
-    data: { name_entity_type: 'Company' },
-  });
-  console.log('Created entity types...');
+  // // 1. Crear EntityTypes
+  // const entityTypeUser = await prisma.entityType.create({
+  //   data: { name_entity_type: 'User' },
+  // });
+  // const entityTypeCompany = await prisma.entityType.create({
+  //   data: { name_entity_type: 'Company' },
+  // });
+  // console.log('Created entity types...');
 
   // 2. Crear Entities
-  const entity1 = await prisma.entity.create({ data: { id_entity_type: entityTypeUser.id_entity_type } });
-  const entity2 = await prisma.entity.create({ data: { id_entity_type: entityTypeUser.id_entity_type } });
-  const entity3 = await prisma.entity.create({ data: { id_entity_type: entityTypeCompany.id_entity_type } });
-  const entity4 = await prisma.entity.create({ data: { id_entity_type: entityTypeCompany.id_entity_type } });
-  const entity5 = await prisma.entity.create({ data: { id_entity_type: entityTypeUser.id_entity_type } });
-  const entity6 = await prisma.entity.create({ data: { id_entity_type: entityTypeCompany.id_entity_type } });
+  const entity1 = await prisma.entity.create({ data: { entity_type: 1 } });
+  const entity2 = await prisma.entity.create({ data: { entity_type: 1 } });
+  const entity3 = await prisma.entity.create({ data: { entity_type: 2 } });
+  const entity4 = await prisma.entity.create({ data: { entity_type: 2 } });
+  const entity5 = await prisma.entity.create({ data: { entity_type: 1 } });
+  const entity6 = await prisma.entity.create({ data: { entity_type: 2 } });
   console.log('Created 6 entities...');
 
   // 3. Crear Transactions

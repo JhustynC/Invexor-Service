@@ -1,6 +1,6 @@
 export class UpdateUserRolDto{
     private constructor(
-        readonly id_user_rol: Int16Array,
+        readonly id_user_rol: number,
         readonly name_user_rol?: string
     ){}
 
