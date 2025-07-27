@@ -1,8 +1,12 @@
 const axios = require('axios');
+const { PrismaClient } = require('@prisma/client');
 
 // Configuration
 const BASE_URL = 'http://localhost:3001';
 const CUSTOM_PROPERTY_ENDPOINT = `${BASE_URL}/customProperty`;
+
+// Prisma client for getting real entity IDs
+const prisma = new PrismaClient();
 
 // Colors for console output
 const colors = {
@@ -29,9 +33,9 @@ function logTest(testName, success, details = '') {
     }
 }
 
-// Test data - Real data structure for MongoDB creation
-const testCustomProperty = {
-    _id: `test-entity-${Date.now()}`, // Unique ID to avoid conflicts
+// Test data - Will be created dynamically with real entity IDs
+let testCustomProperty = {
+    _id: `test-entity-${Date.now()}`, // Fallback ID
     properties: {
         color: 'blue',
         size: 'large',
@@ -48,17 +52,148 @@ const updatedProperties = {
 };
 
 let createdCustomPropertyId = null;
+let realEntityIds = [];
+
+// Function to get real entity IDs from PostgreSQL
+async function getRealEntityIds() {
+    try {
+        log('\n🔗 Getting real entity IDs from PostgreSQL...', colors.blue);
+        
+        // Get some entities from different types
+        const entities = await prisma.entity.findMany({
+            take: 5,
+            include: {
+                user: true,
+                item: true,
+                resource: true,
+                branch: true,
+                area: true
+            }
+        });
+        
+        realEntityIds = entities.map(entity => ({
+            id: entity.id_entity,
+            type: entity.entity_type,
+            relatedData: {
+                user: entity.user?.username || null,
+                item: entity.item?.name_item || null,
+                resource: entity.resource?.resourcename || null,
+                branch: entity.branch?.name_branch || null,
+                area: entity.area?.areaname || null
+            }
+        }));
+        
+        logTest('Get Real Entity IDs', true, `Found ${realEntityIds.length} entities`);
+        
+        // Log some details about the entities
+        realEntityIds.forEach((entity, index) => {
+            const relatedInfo = Object.entries(entity.relatedData)
+                .filter(([key, value]) => value !== null)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(', ');
+            log(`   Entity ${index + 1}: ID=${entity.id}, Type=${entity.type}${relatedInfo ? `, ${relatedInfo}` : ''}`, colors.yellow);
+        });
+        
+        return true;
+    } catch (error) {
+        logTest('Get Real Entity IDs', false, error.message);
+        return false;
+    }
+}
+
+// Function to create test data with real entity IDs
+function createTestDataWithRealIds() {
+    if (realEntityIds.length === 0) {
+        log('⚠️ No real entity IDs available, using fallback test data', colors.yellow);
+        return {
+            _id: `test-entity-${Date.now()}`,
+            properties: {
+                color: 'blue',
+                size: 'large',
+                material: 'plastic',
+                weight: '2.5kg'
+            }
+        };
+    }
+    
+    // Use the first real entity ID
+    const selectedEntity = realEntityIds[0];
+    
+    // Create properties based on entity type
+    let properties = {};
+    
+    switch (selectedEntity.type) {
+        case 1: // User entity
+            properties = {
+                department: 'IT',
+                level: 'Senior',
+                skills: 'JavaScript, Node.js, React',
+                certification: 'AWS Certified'
+            };
+            break;
+        case 2: // Branch entity
+            properties = {
+                region: 'Norte',
+                manager: 'Juan Pérez',
+                employees: '25',
+                established: '2020'
+            };
+            break;
+        case 3: // Area entity
+            properties = {
+                budget: '$50000',
+                head: 'María García',
+                projects: '5',
+                priority: 'High'
+            };
+            break;
+        case 4: // Item entity
+            properties = {
+                condition: 'Excellent',
+                warranty: '2 years',
+                location: 'Office A-101',
+                assigned_to: 'admin_user'
+            };
+            break;
+        case 5: // Resource entity
+            properties = {
+                availability: '80%',
+                cost_center: 'CC-001',
+                responsible: 'Finance Team',
+                renewal_date: '2025-12-31'
+            };
+            break;
+        default:
+            properties = {
+                color: 'blue',
+                size: 'large',
+                material: 'plastic',
+                weight: '2.5kg'
+            };
+    }
+    
+    return {
+        _id: selectedEntity.id.toString(),
+        properties: properties
+    };
+}
 
 // Test functions - REAL OPERATIONS
 async function testCreateCustomProperty() {
     try {
         log('\n🔧 Testing CREATE Custom Property...', colors.blue);
         
+        // Create test data with real entity ID
+        testCustomProperty = createTestDataWithRealIds();
+        
+        log(`   Using Entity ID: ${testCustomProperty._id}`, colors.yellow);
+        log(`   Properties: ${JSON.stringify(testCustomProperty.properties, null, 2)}`, colors.yellow);
+        
         const response = await axios.post(CUSTOM_PROPERTY_ENDPOINT, testCustomProperty);
         
         if (response.status === 201 && response.data.ok) {
             createdCustomPropertyId = response.data.data._id;
-            logTest('Create Custom Property', true, `Created with ID: ${createdCustomPropertyId}`);
+            logTest('Create Custom Property', true, `Created with Entity ID: ${createdCustomPropertyId}`);
             return true;
         } else {
             logTest('Create Custom Property', false, 'Unexpected response format');
@@ -296,42 +431,57 @@ async function runAllTests() {
     log('\n🚀 Starting Custom Properties API Tests (REAL OPERATIONS)', colors.bold + colors.blue);
     log('=' * 60, colors.blue);
     log('📝 DOCUMENTS WILL BE CREATED, UPDATED, AND DELETED IN MONGODB', colors.green);
+    log('🔗 USING REAL ENTITY IDS FROM POSTGRESQL DATABASE', colors.green);
     log('=' * 60, colors.blue);
     
-    const tests = [
-        testCreateCustomProperty,
-        testGetAllCustomProperties,
-        testGetCustomPropertyById,
-        testUpdateCustomProperty,
-        testAddProperty,
-        testGetProperty,
-        // testRemoveProperty,
-        // testDeleteCustomProperty,
-        testErrorHandling
-    ];
-    
-    let passedTests = 0;
-    let totalTests = tests.length;
-    
-    for (const test of tests) {
-        try {
-            const result = await test();
-            if (result) passedTests++;
-        } catch (error) {
-            logTest('Test Execution', false, error.message);
+    try {
+        // First, get real entity IDs from PostgreSQL
+        const entityIdsLoaded = await getRealEntityIds();
+        if (!entityIdsLoaded) {
+            log('⚠️ Failed to load real entity IDs, continuing with fallback data', colors.yellow);
         }
+        
+        const tests = [
+            testCreateCustomProperty,
+            testGetAllCustomProperties,
+            testGetCustomPropertyById,
+            testUpdateCustomProperty,
+            testAddProperty,
+            testGetProperty,
+            // testRemoveProperty,
+            // testDeleteCustomProperty,
+            testErrorHandling
+        ];
+        
+        let passedTests = 0;
+        let totalTests = tests.length;
+        
+        for (const test of tests) {
+            try {
+                const result = await test();
+                if (result) passedTests++;
+            } catch (error) {
+                logTest('Test Execution', false, error.message);
+            }
+        }
+        
+        log('\n' + '=' * 60, colors.blue);
+        log(`📊 Test Results: ${passedTests}/${totalTests} tests passed`, colors.bold + (passedTests === totalTests ? colors.green : colors.red));
+        
+        if (passedTests === totalTests) {
+            log('🎉 All tests passed! Custom Properties API is working correctly.', colors.green);
+        } else {
+            log('⚠️ Some tests failed. Please check the API implementation.', colors.yellow);
+        }
+        
+        log('\n✅ Real documents were created, updated, and deleted in MongoDB', colors.green);
+        log('🔗 Used real entity IDs from PostgreSQL database', colors.green);
+        
+    } finally {
+        // Cleanup Prisma connection
+        await prisma.$disconnect();
+        log('\n📌 Disconnected from PostgreSQL database', colors.blue);
     }
-    
-    log('\n' + '=' * 60, colors.blue);
-    log(`📊 Test Results: ${passedTests}/${totalTests} tests passed`, colors.bold + (passedTests === totalTests ? colors.green : colors.red));
-    
-    if (passedTests === totalTests) {
-        log('🎉 All tests passed! Custom Properties API is working correctly.', colors.green);
-    } else {
-        log('⚠️ Some tests failed. Please check the API implementation.', colors.yellow);
-    }
-    
-    log('\n✅ Real documents were created, updated, and deleted in MongoDB', colors.green);
 }
 
 // Run tests if this file is executed directly

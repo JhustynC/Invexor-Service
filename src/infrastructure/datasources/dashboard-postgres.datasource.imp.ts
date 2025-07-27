@@ -39,11 +39,7 @@ export class PostgresDashboardDatasourceImp implements AbsDashboardDatasource {
             include: {
                 transaction_entities: {
                     include: {
-                        entity: {
-                            include: {
-                                entity_type: true
-                            }
-                        }
+                        entity: true
                     }
                 }
             }
@@ -53,7 +49,7 @@ export class PostgresDashboardDatasourceImp implements AbsDashboardDatasource {
             const firstEntity = tx.transaction_entities[0]?.entity;
             return {
                 id: tx.transaction_id,
-                type: firstEntity?.entity_type.name_entity_type || 'N/A',
+                type: firstEntity?.entity_type || 'N/A',
                 amount: tx.amount,
                 date: tx.transaction_date,
             }

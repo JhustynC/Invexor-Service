@@ -6,7 +6,8 @@
     "ts": "tsx watch src/app.ts",
     "docker:up": "docker compose up -d",
     "dev": "npm run docker:up && npm run ts",
-    "db:seed": "npx prisma db seed"
+    "db:seed": "npx prisma db seed",
+    "mongo:test": "node src/scripts/test-custom-properties.js"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -17,8 +18,7 @@
   "description": "",
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
-    "@prisma/client": "^6.11.1",
-    "@types/pdfkit": "^0.17.2",
+    "@prisma/client": "^6.12.0",
     "axios": "^1.11.0",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
@@ -29,7 +29,8 @@
     "mongoose": "^8.16.0",
     "morgan": "^1.10.0",
     "pdfkit": "^0.17.1",
-    "prisma": "^6.11.1"
+    "prisma": "^6.11.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",
@@ -38,8 +39,10 @@
     "@types/helmet": "^0.0.48",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.3",
+    "@types/pdfkit": "^0.17.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "@types/uuid": "^10.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "tsx": "^4.20.3",

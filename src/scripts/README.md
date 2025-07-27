@@ -97,16 +97,41 @@ node test-custom-properties.js && node test-form-templates.js
 ## Test Data
 
 ### Custom Properties Test Data
+
+**NEW: Uses Real Entity IDs from PostgreSQL**
+
+The script now automatically fetches real entity IDs from your PostgreSQL database and creates custom properties based on the entity type:
+
 ```javascript
+// Example for User Entity (type 1)
 {
-    _id: 'test-entity-123',
+    _id: '1', // Real entity ID from PostgreSQL
     properties: {
-        color: 'blue',
-        size: 'large',
-        material: 'plastic'
+        department: 'IT',
+        level: 'Senior',
+        skills: 'JavaScript, Node.js, React',
+        certification: 'AWS Certified'
+    }
+}
+
+// Example for Item Entity (type 4)
+{
+    _id: '10', // Real entity ID from PostgreSQL
+    properties: {
+        condition: 'Excellent',
+        warranty: '2 years',
+        location: 'Office A-101',
+        assigned_to: 'admin_user'
     }
 }
 ```
+
+**Entity Type Mappings:**
+- Type 1: User entities → IT department properties
+- Type 2: Branch entities → Regional management properties
+- Type 3: Area entities → Budget and project properties
+- Type 4: Item entities → Asset management properties
+- Type 5: Resource entities → Resource allocation properties
 
 ### Form Templates Test Data
 The script tests various form control types including:
