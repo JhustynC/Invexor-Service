@@ -9,8 +9,8 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     async saveResource(resource: CreateResourseDto): Promise<ResourceEntity> {
         const newResource = await prisma.resource.create({
             data: {
-                id_resource: resource.resource_id,
-                name_resource: resource.resourcename,
+                resource_id: resource.resource_id,
+                resourcename: resource.resourcename,
                 measure: resource.measure,
                 currency: resource.currency,
                 description: resource.description,
@@ -23,7 +23,7 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     
     async getById(id: string): Promise<ResourceEntity | undefined> {
         const resource = await prisma.resource.findUnique({
-            where: {id_resource: id}
+            where: {resource_id: id}
         });
         if(!resource) return undefined
         return ResourceEntity.fromObject(resource)
@@ -43,7 +43,7 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
         if (resource.description) updateData.description = resource.description;
 
         const updateResource = await prisma.resource.update({
-            where: {id_resource: resource.resource_id},
+            where: {resource_id: resource.resource_id},
             data: updateData
         })
 
@@ -53,7 +53,7 @@ export class PostgresResourceDatasourceImp implements AbsResourceDatasource{
     
     async deleteResource(id: string): Promise<ResourceEntity> {
         const deleteResource = await prisma.resource.delete({
-            where: {id_resource: id}
+            where: {resource_id: id}
         })
         if(!deleteResource) throw new Error("Something happened while attempting to delete data");
         return ResourceEntity.fromObject(deleteResource);

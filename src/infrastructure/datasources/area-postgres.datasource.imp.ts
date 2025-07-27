@@ -9,12 +9,12 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
     async saveArea(area: CreateAreaDto): Promise<AreaEntity> {
         const newArea = await prisma.area.create({
             data: {
-                id_area: String(area.area_id),
-                name_area: area.areaname,
-                id_branch: area.branch_id,
+                area_id: String(area.area_id),
+                areaname: area.areaname,
+                branch_id: area.branch_id,
                 description: area.description,
-                state: area.active,
-                id_pattern_area: area.pattern_area_id,
+                active: area.active,
+                pattern_area_id: area.pattern_area_id,
                 phone: area.phone,
                 id_entity: area.id_entity
             }
@@ -24,7 +24,7 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
 
     async getById(id: string): Promise<AreaEntity | undefined> {
         const area = await prisma.area.findUnique({
-            where: { id_area: id }
+            where: { area_id: id }
         });
         if (!area) return undefined;
         return AreaEntity.fromObject(area);
@@ -53,7 +53,7 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
         if (area.phone) mappedUpdateData.phone = area.phone;
 
         const updateArea = await prisma.area.update({
-            where: { id_area: String(area.area_id) },
+            where: { area_id: String(area.area_id) },
             data: mappedUpdateData
         });
 
@@ -63,7 +63,7 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
 
     async deleteArea(id: string): Promise<AreaEntity> {
         const deletedArea = await prisma.area.delete({
-            where: { id_area: id }
+            where: { area_id: id }
         });
         if (!deletedArea) throw new Error("Something happened while attempting to delete data");
         return AreaEntity.fromObject(deletedArea);
