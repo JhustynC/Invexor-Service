@@ -12,7 +12,7 @@ export class PostgresEntityDatasourceImp implements AbsEntityDatasource{
     async saveEntity(entity: CreateEntityDto): Promise<EntityEntity> {
         const newEntity = await prisma.entity.create({
             data: {
-                id_entity_type: entity.id_entity_type
+                entity_type: entity.entity_type // Add this property, ensure CreateEntityDto has it
             }
         })
         return EntityEntity.fromObject(newEntity)
