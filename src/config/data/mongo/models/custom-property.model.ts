@@ -17,7 +17,7 @@ interface ICustomPropertyDocument extends mongoose.Document, ICustomPropertyMeth
 }
 
 const customPropertySchema = new mongoose.Schema<ICustomPropertyDocument>({
-    _id: { type: String, required: true, unique: true },
+    _id: { type: String, required: true },
     properties: { 
         type: Map, 
         of: String, 

@@ -9,7 +9,7 @@ export class MongoDatabase{
     static async connect(options: ConnectionMongoOptions): Promise<mongoose.Mongoose> {
         const {url, dbName} = options;
         try{
-            const mongodb = await mongoose.connect(url, {dbName: dbName});
+            const mongodb = await mongoose.connect(url, {dbName: dbName} as mongoose.ConnectOptions);
             console.log("Connect to MongoDb");
             return mongodb;
         }catch(error){
