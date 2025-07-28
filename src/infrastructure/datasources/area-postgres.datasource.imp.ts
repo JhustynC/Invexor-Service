@@ -35,14 +35,6 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
     }
     async updateArea(area: UpdateAreaDto): Promise<AreaEntity | undefined> {
 
-        const updateData: any={};
-        if(area.areaname) updateData.areaname = area.areaname;
-        if(area.active) updateData.active = area.active;
-        if(area.description) updateData.description = area.description;
-        if(area.branch_id) updateData.branch_id = area.branch_id;
-        if(area.pattern_area_id) updateData.pattern_area_id = area.pattern_area_id
-        if(area.phone) updateData.phone = area.phone;
-
         // Map UpdateAreaDto fields to match the database column names
         const mappedUpdateData: any = {};
         if (area.areaname) mappedUpdateData.areaname = area.areaname;
@@ -51,6 +43,7 @@ export class PostgresAreaDatasourceImp implements AbsAreaDatasource{
         if (area.branch_id) mappedUpdateData.branch_id = area.branch_id;
         if (area.pattern_area_id) mappedUpdateData.pattern_area_id = area.pattern_area_id;
         if (area.phone) mappedUpdateData.phone = area.phone;
+        if (area.id_entity) mappedUpdateData.id_entity = area.id_entity;
 
         const updateArea = await prisma.area.update({
             where: { area_id: String(area.area_id) },
