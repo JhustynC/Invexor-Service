@@ -1,7 +1,8 @@
 enum EntityType {
-    user = 1,
+    branch = 1,
+    area,
     item,
     resource,
-    area,
-    branch
+    user
+    
 }
