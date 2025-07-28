@@ -65,6 +65,12 @@ async function main() {
   const itemEntity2 = await prisma.entity.create({ data: { entity_type: 4 } });
   const itemEntity3 = await prisma.entity.create({ data: { entity_type: 4 } });
   const itemEntity4 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity5 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity6 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity7 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity8 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity9 = await prisma.entity.create({ data: { entity_type: 4 } });
+  const itemEntity10 = await prisma.entity.create({ data: { entity_type: 4 } });
   const resourceEntity1 = await prisma.entity.create({ data: { entity_type: 5 } });
   const resourceEntity2 = await prisma.entity.create({ data: { entity_type: 5 } });
   const resourceEntity3 = await prisma.entity.create({ data: { entity_type: 5 } });
@@ -187,16 +193,21 @@ async function main() {
   console.log('Created areas...');
 
   // 8. Crear Items
+  // Distribución: 4 Vehicle, 3 Equipment, 2 Software, 1 Furniture
+
+  // 1 Furniture
   const item1 = await prisma.item.create({
     data: {
       id_item: uuidv4(),
-      name_item: 'Laptop Dell XPS 13',
-      description: 'Laptop para desarrollo y trabajo de oficina',
-      provider: 'Dell Technologies',
-      id_item_type: equipmentType.id_item_type,
+      name_item: 'Escritorio Ejecutivo',
+      description: 'Escritorio de madera con cajones',
+      provider: 'Muebles Modernos SA',
+      id_item_type: furnitureType.id_item_type,
       id_entity: itemEntity1.id_entity,
     },
   });
+
+  // 2 Software
   const item2 = await prisma.item.create({
     data: {
       id_item: uuidv4(),
@@ -210,21 +221,85 @@ async function main() {
   const item3 = await prisma.item.create({
     data: {
       id_item: uuidv4(),
-      name_item: 'Escritorio Ejecutivo',
-      description: 'Escritorio de madera con cajones',
-      provider: 'Muebles Modernos SA',
-      id_item_type: furnitureType.id_item_type,
+      name_item: 'Licencia Adobe Creative Suite',
+      description: 'Suite de diseño y creatividad',
+      provider: 'Adobe Inc.',
+      id_item_type: softwareType.id_item_type,
       id_entity: itemEntity3.id_entity,
     },
   });
+
+  // 3 Equipment
   const item4 = await prisma.item.create({
     data: {
       id_item: uuidv4(),
-      name_item: 'Vehículo Toyota Corolla',
-      description: 'Automóvil para transporte corporativo',
+      name_item: 'Laptop Dell XPS 13',
+      description: 'Laptop para desarrollo y trabajo de oficina',
+      provider: 'Dell Technologies',
+      id_item_type: equipmentType.id_item_type,
+      id_entity: itemEntity4.id_entity,
+    },
+  });
+  const item5 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Monitor Samsung 27"',
+      description: 'Monitor 4K para diseño y programación',
+      provider: 'Samsung Electronics',
+      id_item_type: equipmentType.id_item_type,
+      id_entity: itemEntity5.id_entity,
+    },
+  });
+  const item6 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Impresora HP LaserJet',
+      description: 'Impresora láser multifuncional',
+      provider: 'HP Inc.',
+      id_item_type: equipmentType.id_item_type,
+      id_entity: itemEntity6.id_entity,
+    },
+  });
+
+  // 4 Vehicle
+  const item7 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Toyota Corolla 2023',
+      description: 'Automóvil sedán para transporte ejecutivo',
       provider: 'Toyota Motor Company',
       id_item_type: vehicleType.id_item_type,
-      id_entity: itemEntity4.id_entity,
+      id_entity: itemEntity7.id_entity,
+    },
+  });
+  const item8 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Ford Transit Van',
+      description: 'Camioneta para transporte de carga',
+      provider: 'Ford Motor Company',
+      id_item_type: vehicleType.id_item_type,
+      id_entity: itemEntity8.id_entity, // Reutilizamos entidades
+    },
+  });
+  const item9 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Honda Civic 2024',
+      description: 'Automóvil compacto para uso corporativo',
+      provider: 'Honda Motor Co.',
+      id_item_type: vehicleType.id_item_type,
+      id_entity: itemEntity9.id_entity, // Reutilizamos entidades
+    },
+  });
+  const item10 = await prisma.item.create({
+    data: {
+      id_item: uuidv4(),
+      name_item: 'Nissan Sentra 2023',
+      description: 'Automóvil económico para transporte diario',
+      provider: 'Nissan Motor Co.',
+      id_item_type: vehicleType.id_item_type,
+      id_entity: itemEntity10.id_entity, // Reutilizamos entidades
     },
   });
   console.log('Created items...');
@@ -275,6 +350,9 @@ async function main() {
       { id_owner_entity: branchEntity2.id_entity, id_owned_entity: resourceEntity3.id_entity, amount: 200 }, // 200 m2
       // Areas own items
       { id_owner_entity: areaEntity3.id_entity, id_owned_entity: itemEntity4.id_entity, amount: 1 },
+      { id_owner_entity: areaEntity3.id_entity, id_owned_entity: itemEntity5.id_entity, amount: 1 },
+      { id_owner_entity: areaEntity3.id_entity, id_owned_entity: itemEntity6.id_entity, amount: 1 },
+      { id_owner_entity: areaEntity3.id_entity, id_owned_entity: itemEntity7.id_entity, amount: 1 },
     ],
   });
   console.log('Created entity ownerships...');
