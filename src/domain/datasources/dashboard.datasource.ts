@@ -3,4 +3,5 @@ export abstract class AbsDashboardDatasource {
     abstract getTotalItems(): Promise<number>;
     abstract getItemsCountByType(): Promise<{ name: string; count: number }[]>;
     abstract getRecentTransactions(): Promise<any[]>;
+    abstract getGraphData(): Promise<{ nodes: any[], links: any[] }>;
 }

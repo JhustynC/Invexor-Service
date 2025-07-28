@@ -19,4 +19,8 @@ export class DashboardRepositoryImp implements AbsDashboardRepository {
     getTransactionsByPeriod(period: 'month' | 'year', year?: number): Promise<{ period: string, total: number }[]> {
         return this.datasource.getTransactionsByPeriod(period, year);
     }
+
+    getGraphData(): Promise<{ nodes: any[], links: any[] }> {
+        return this.datasource.getGraphData();
+    }
 }

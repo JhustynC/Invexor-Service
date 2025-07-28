@@ -311,4 +311,15 @@ export class DashboardController {
             }
         }
     }
+
+    public getGraphData: RequestHandler = async (req: Request, res: Response) => {
+        try {
+            const useCases = new DashboardUseCases(this.dashboardRepository);
+            const graphData = await useCases.getGraphData();
+            res.json(graphData);
+        } catch (error) {
+            console.error('Error getting graph data:', error);
+            res.status(500).json({ error: 'Failed to get graph data' });
+        }
+    }
 }

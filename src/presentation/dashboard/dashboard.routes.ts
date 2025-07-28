@@ -103,6 +103,33 @@ export class DashboardRoutes {
          */
         router.get('/report', controller.generateReport);
 
+        /**
+         * @swagger
+         * /dashboard/graph-data:
+         *   get:
+         *     summary: Get graph data for visualization
+         *     tags: [Dashboard]
+         *     responses:
+         *       200:
+         *         description: Graph data with nodes and links
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 nodes:
+         *                   type: array
+         *                   items:
+         *                     type: object
+         *                 links:
+         *                   type: array
+         *                   items:
+         *                     type: object
+         *       500:
+         *         description: Internal server error
+         */
+        router.get('/graph-data', controller.getGraphData);
+
         return router;
     }
 }

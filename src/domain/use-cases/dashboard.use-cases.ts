@@ -18,4 +18,8 @@ export class DashboardUseCases {
     async getTransactionsByPeriod(period: 'month' | 'year', year?: number) {
         return this.repository.getTransactionsByPeriod(period, year);
     }
+
+    async getGraphData() {
+        return this.repository.getGraphData();
+    }
 }

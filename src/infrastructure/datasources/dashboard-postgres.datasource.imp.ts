@@ -90,4 +90,162 @@ export class PostgresDashboardDatasourceImp implements AbsDashboardDatasource {
         `);
         return results.map(r => ({ period: r.period.toString(), total: Number(r.total) }));
     }
+
+    async getGraphData(): Promise<{ nodes: any[], links: any[] }> {
+        try {
+            // Obtener todas las entidades con sus relaciones
+            const [branches, areas, users, items, resources, transactions] = await Promise.all([
+                // Branches con sus entidades
+                prisma.branch.findMany({
+                    include: {
+                        entity: true
+                    }
+                }),
+                // Areas con sus entidades
+                prisma.area.findMany({
+                    include: {
+                        entity: true
+                    }
+                }),
+                // Users con sus roles
+                prisma.user.findMany({
+                    include: {
+                        entity: true,
+                        user_roles: {
+                            include: {
+                                user_role: true
+                            }
+                        }
+                    }
+                }),
+                // Items con sus tipos
+                prisma.item.findMany({
+                    include: {
+                        entity: true,
+                        item_type: true
+                    }
+                }),
+                // Resources
+                prisma.resource.findMany({
+                    include: {
+                        entity: true
+                    }
+                }),
+                // Ownership relationships
+                prisma.entityOwnership.findMany({
+                    include: {
+                        owner_entity: true,
+                        owned_entity: true
+                    }
+                })
+            ]);
+
+            const nodes: any[] = [];
+            const links: any[] = [];
+
+            // Crear nodos para branches
+            branches.forEach(branch => {
+                nodes.push({
+                    id: `branch-${branch.id_branch}`,
+                    label: branch.name_branch,
+                    group: 'branch',
+                    type: 'branch',
+                    city: branch.city,
+                    entity_id: branch.id_entity
+                });
+            });
+
+            // Crear nodos para areas y enlaces con branches
+            areas.forEach(area => {
+                nodes.push({
+                    id: `area-${area.area_id}`,
+                    label: area.areaname,
+                    group: 'area',
+                    type: 'area',
+                    description: area.description,
+                    entity_id: area.id_entity
+                });
+
+                // Enlace area -> branch usando branch_id
+                if (area.branch_id) {
+                    links.push({
+                        source: `area-${area.area_id}`,
+                        target: `branch-${area.branch_id}`,
+                        type: 'belongs_to'
+                    });
+                }
+
+                // Enlaces jerárquicos entre areas
+                if (area.pattern_area_id && area.pattern_area_id !== area.area_id) {
+                    links.push({
+                        source: `area-${area.area_id}`,
+                        target: `area-${area.pattern_area_id}`,
+                        type: 'reports_to'
+                    });
+                }
+            });
+
+            // Crear nodos para users
+            users.forEach(user => {
+                const roles = user.user_roles.map(ur => ur.user_role.name_user_rol).join(', ');
+                nodes.push({
+                    id: `user-${user.user_id}`,
+                    label: user.username,
+                    group: 'user',
+                    type: 'user',
+                    email: user.email,
+                    roles: roles,
+                    entity_id: user.id_entity
+                });
+            });
+
+            // Crear nodos para items
+            items.forEach(item => {
+                nodes.push({
+                    id: `item-${item.id_item}`,
+                    label: item.name_item,
+                    group: 'item',
+                    type: 'item',
+                    description: item.description,
+                    provider: item.provider,
+                    item_type: item.item_type.name,
+                    entity_id: item.id_entity
+                });
+            });
+
+            // Crear nodos para resources
+            resources.forEach(resource => {
+                nodes.push({
+                    id: `resource-${resource.resource_id}`,
+                    label: resource.resourcename,
+                    group: 'resource',
+                    type: 'resource',
+                    description: resource.description,
+                    measure: resource.measure,
+                    currency: resource.currency,
+                    entity_id: resource.id_entity
+                });
+            });
+
+            // Crear enlaces basados en ownership
+            transactions.forEach(ownership => {
+                const ownerNode = nodes.find(n => n.entity_id === ownership.id_owner_entity);
+                const ownedNode = nodes.find(n => n.entity_id === ownership.id_owned_entity);
+                
+                if (ownerNode && ownedNode) {
+                    links.push({
+                        source: ownerNode.id,
+                        target: ownedNode.id,
+                        type: 'owns',
+                        amount: ownership.amount
+                    });
+                }
+            });
+
+            return { nodes, links };
+        } catch (error) {
+            console.error('Error getting graph data:', error);
+            throw error;
+        }
+    }
 }
